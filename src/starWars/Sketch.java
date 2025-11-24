@@ -47,13 +47,13 @@ public class Sketch {
 
             // Breakout-style collisions
             // for (Element e : elements) {
-            //     if (p.getBottom() >= e.getTop() &&
-            //         p.getTop() <= e.getBottom() &&
-            //         p.getRight() >= e.getLeft() &&
-            //         p.getLeft() <= e.getRight()) {
-            //         p.collideWith(e);
-            //     }
-            // }
+              //   if (p.getBottom() >= e.getTop() &&
+                //     p.getTop() <= e.getBottom() &&
+                  //   p.getRight() >= e.getLeft() &&
+                    // p.getLeft() <= e.getRight()) {
+                    // p.collideWith(e);
+                // }
+             //}
         });
     }
 
@@ -146,34 +146,34 @@ public class Sketch {
 
     public static Element getImageValue(String value){
         if (value.equals("1")){
-            Element image = new Element("res/starWars/ackground.png", "1", 1, 19);
+            Element image = new Element("starWars/background.png", "1", 1, 19);
             return image;
         } else if (value.equals("2")) {
-            Element image = new Element("res/starWars/walls.png", "1", 1.2, 19);
+            Element image = new Element("starWars/walls.png", "1", 1.2, 19);
             return image;
         } else if (value.equals("3a")) {
-            Element image = new Element("res/starWars/exitA.png", "1", 1.1, 19);
+            Element image = new Element("starWars/exitA.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("3b")) {
-            Element image = new Element("res/starWars/exitB.png", "1", 1.1, 19);
+            Element image = new Element("starWars/exitB.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("3c")) {
-            Element image = new Element("res/starWars/exitC.png", "1", 1.1, 19);
+            Element image = new Element("starWars/exitC.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("3d")) {
-            Element image = new Element("res/starWars/exitD.png", "1", 1.1, 19);
+            Element image = new Element("starWars/exitD.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("4")) {
-            Element image = new Element("res/starWars/blue.png", "1", 1.7, 19);
+            Element image = new Element("starWars/blue.png", "1", 1.7, 19);
             return image;
         } else if (value.equals("5")) {
-            Element image = new Element("res/starWars/yellow.png", "1", 1.7, 19);
+            Element image = new Element("starWars/yellow.png", "1", 1.7, 19);
             return image;
         } else if (value.equals("6")) {
-            Element image = new Element("res/starWars/ground.png", "1", 1.3, 19);
+            Element image = new Element("starWars/ground.png", "1", 1.3, 19);
             return image;
         } else {
-            Element image = new Element("res/starWars/poison.png", "1", 1.5, 19);
+            Element image = new Element("starWars/poison.png", "1", 1.5, 19);
             return image;
         }
     }
