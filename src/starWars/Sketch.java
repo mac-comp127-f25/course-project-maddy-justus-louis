@@ -28,11 +28,11 @@ public class Sketch {
 
 
     public void setup(){
-        String[][] level = readCSV("res/level1.csv");
+        String[][] level = readCSV("res/starWars/level1.csv");
         drawLevel(canvas, level);
 
 
-        p = new Sprite ("leia.png", .08, 10, 650);
+        p = new Sprite ("res/starWars/leia.png", .08, 10, 650);
         canvas.add(p);
 
 
@@ -146,34 +146,34 @@ public class Sketch {
 
     public static Element getImageValue(String value){
         if (value.equals("1")){
-            Element image = new Element("background.png", "1", 1, 19);
+            Element image = new Element("res/starWars/ackground.png", "1", 1, 19);
             return image;
         } else if (value.equals("2")) {
-            Element image = new Element("walls.png", "1", 1.2, 19);
+            Element image = new Element("res/starWars/walls.png", "1", 1.2, 19);
             return image;
         } else if (value.equals("3a")) {
-            Element image = new Element("exitA.png", "1", 1.1, 19);
+            Element image = new Element("res/starWars/exitA.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("3b")) {
-            Element image = new Element("exitB.png", "1", 1.1, 19);
+            Element image = new Element("res/starWars/exitB.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("3c")) {
-            Element image = new Element("exitC.png", "1", 1.1, 19);
+            Element image = new Element("res/starWars/exitC.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("3d")) {
-            Element image = new Element("exitD.png", "1", 1.1, 19);
+            Element image = new Element("res/starWars/exitD.png", "1", 1.1, 19);
             return image;
         } else if (value.equals("4")) {
-            Element image = new Element("blue.png", "1", 1.7, 19);
+            Element image = new Element("res/starWars/blue.png", "1", 1.7, 19);
             return image;
         } else if (value.equals("5")) {
-            Element image = new Element("yellow.png", "1", 1.7, 19);
+            Element image = new Element("res/starWars/yellow.png", "1", 1.7, 19);
             return image;
         } else if (value.equals("6")) {
-            Element image = new Element("ground.png", "1", 1.3, 19);
+            Element image = new Element("res/starWars/ground.png", "1", 1.3, 19);
             return image;
         } else {
-            Element image = new Element("poison.png", "1", 1.5, 19);
+            Element image = new Element("res/starWars/poison.png", "1", 1.5, 19);
             return image;
         }
     }
