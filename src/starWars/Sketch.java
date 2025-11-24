@@ -146,7 +146,7 @@ public class Sketch {
 
     public static Element getImageValue(String value){
         if (value.equals("1")){
-            Element image = new Element("res/starWars/ackground.png", "1", 1, 19);
+            Element image = new Element("res/starWars/background.png", "1", 1, 19);
             return image;
         } else if (value.equals("2")) {
             Element image = new Element("res/starWars/walls.png", "1", 1.2, 19);
