@@ -26,7 +26,7 @@ public class Sketch {
        String[][] level = readCSV("res/level1.csv");
        drawLevel(canvas, level);
 
-       p = new Sprite ("leia.png", .08, 30, 710);
+       p = new Sprite ("leia.png", .08, 30, 680);
        canvas.add(p);
 
        setupKeys();

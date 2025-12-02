@@ -34,16 +34,20 @@ public class Sprite extends GraphicsGroup {
     public boolean onGround = false;
 
     // attributes
+    private final double SCALE = 0.03;
     private double width, height;
     private Ellipse debug;
+    private Image character;
 
     public Sprite(String imageFile, double scale, double x, double y) {
-        debug = new Ellipse(0, 0, 20, 20);
-        debug.setFillColor(Color.RED);
-        add(debug);
+        character = new Image("leia.png");
+        character.setScale(SCALE);
+        //debug = new Ellipse(0, 0, 20, 20);
+        //debug.setFillColor(Color.RED);
+        add(character);
 
-        width = debug.getWidth(); // replace with image
-        height = debug.getHeight(); // replace with image
+        width = character.getWidth() * SCALE;
+        height = character.getHeight() * SCALE;
 
         setCenter(x, y);
 
