@@ -5,21 +5,36 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class Sprite extends GraphicsGroup {
-    private final double runSpeed = 5;
-    private final double gravity = 0.5;
-    private final double jumpStrength = -9.8;
-    private final double maxFallSpeed = 10;
-    private final double groundY = 710;
+    // physics
+    private final double RUN_ACCEL = 0.6;
+    private final double RUN_DECEL = 0.5;
+    private final double AIR_ACCEL = 0.3;
+    private final double MAX_RUN = 4.0;
+
+    private final double GRAVITY_UP = 0.35;
+    private final double GRAVITY_DOWN = 0.55;
+    private final double MAX_FALL = 10;
+
+    private final double JUMP_VEL = -8.5;
+    private final double COYOTE_TIME = 0.12;
+    private final double JUMP_BUFFER = 0.12;
 
     public double vx = 0;
     public double vy = 0;
 
+    // timing
+    private double coyoteTimer = 0;
+    private double jumpBufferTimer = 0;
+
+    // states
+    public boolean movingLeft = false;
+    public boolean movingRight = false;
+    public boolean jumpPressed = false;
+    public boolean jumpReleased = false;
     public boolean onGround = false;
-    private boolean movingLeft, movingRight;
 
+    // attributes
     private double width, height;
-
-    // keep a visible debug shape so width/height are well-defined
     private Ellipse debug;
 
     public Sprite(String imageFile, double scale, double x, double y) {
@@ -27,9 +42,8 @@ public class Sprite extends GraphicsGroup {
         debug.setFillColor(Color.RED);
         add(debug);
 
-        // width/height used by collision math (match debug size)
-        width = debug.getWidth();
-        height = debug.getHeight();
+        width = debug.getWidth(); // replace with image
+        height = debug.getHeight(); // replace with image
 
         setCenter(x, y);
 
@@ -37,52 +51,78 @@ public class Sprite extends GraphicsGroup {
         movingRight = false;
     }
 
-    // Main move function: call this from Sketch.animate: p.move(canvas, elements);
     public void move(CanvasWindow canvas, ArrayList<Element> elements) {
-        // Horizontal intent from input flags
-        double dx = 0;
-        if (movingLeft)  dx -= runSpeed;
-        if (movingRight) dx += runSpeed;
-        vx = dx;
+        // horizontal
+        double accel = onGround ? RUN_ACCEL : AIR_ACCEL;
 
-        // Predictive horizontal resolution (commits movement if allowed)
-        resolveHorizontal(elements, dx);
+        if (movingLeft)  vx -= accel;
+        if (movingRight) vx += accel;
 
-        // Vertical physics
-        vy += gravity;
-        if (vy > maxFallSpeed) vy = maxFallSpeed;
-        // Predictive vertical resolution
-        resolveVertical(elements, vy);
-
-        if (getY() >= groundY){
-          setY(groundY);
-          vy = 0;
-          onGround = true;
-      }
-    }
-
-    // Call when key pressed
-    public void startMoving(String key) {
-        if (key.equals("UP_ARROW") || key.equals("W")) {
+        if (!movingLeft && !movingRight) {
             if (onGround) {
-                vy = jumpStrength;
-                onGround = false;
+                if (vx > 0) vx = Math.max(0, vx - RUN_DECEL);
+                if (vx < 0) vx = Math.min(0, vx + RUN_DECEL);
+            }
+            else {
+                vx *= 0.98;
             }
         }
-        if (key.equals("DOWN_ARROW") || key.equals("S")) {
-            if (vy < 0) vy = 0;
+
+        if (vx > MAX_RUN) vx = MAX_RUN;
+        if (vx < -MAX_RUN) vx = -MAX_RUN;
+
+        resolveHorizontal(elements, vx);
+
+        // vertical
+        if (vy < 0) vy += GRAVITY_UP;
+        else        vy += GRAVITY_DOWN;
+
+        if (vy > MAX_FALL) vy = MAX_FALL;
+
+
+        if (onGround){
+            coyoteTimer = COYOTE_TIME;
+        } else {
+            coyoteTimer -= 1.0 / 60.0;
+        }         
+
+        jumpBufferTimer -= 1.0 / 60.0;
+
+        if (jumpBufferTimer > 0 && coyoteTimer > 0) {
+            vy = JUMP_VEL;
+            onGround = false;
+            jumpBufferTimer = 0;
         }
-        if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = true;
-        if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = true;
+
+        if (jumpReleased && vy < 0) {
+            vy *= 0.5;
+        }
+        jumpReleased = false;
+
+        resolveVertical(elements, vy);
     }
 
-    // Call when key released
+    // called whenever key pressed
+    public void startMoving(String key) {
+        if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = true;
+        if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = true;
+
+        if (key.equals("UP_ARROW") || key.equals("W")) {
+            jumpPressed = true;
+            jumpBufferTimer = JUMP_BUFFER;
+        }
+    }
+
+    // called whenever key pressed
     public void stopMoving(String key) {
         if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = false;
         if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = false;
+
+        if (key.equals("UP_ARROW") || key.equals("W")) {
+            jumpReleased = true;
+        }
     }
 
-    // Predictive horizontal collision resolution
     private void resolveHorizontal(ArrayList<Element> elements, double dx) {
         if (dx == 0) return;
 
@@ -91,21 +131,17 @@ public class Sprite extends GraphicsGroup {
 
         for (Element e : elements) {
             if (e == null) continue;
-            if (e.getType().equals("1")) continue; // skip background
+            if (e.getType().equals("1")) continue;
 
-            // Only consider elements that vertically overlap the sprite right now
             boolean overlapY = !(getBottom() <= e.getTop() || getTop() >= e.getBottom());
             if (!overlapY) continue;
 
-            // moving right and would cross into the block
             if (dx > 0 && nextRight > e.getLeft() && getRight() <= e.getLeft()) {
-                // snap exactly to left edge
                 setCenter(e.getLeft() - width/2, getCenter().getY());
                 vx = 0;
                 return;
             }
 
-            // moving left and would cross into the block
             if (dx < 0 && nextLeft < e.getRight() && getLeft() >= e.getRight()) {
                 setCenter(e.getRight() + width/2, getCenter().getY());
                 vx = 0;
@@ -113,29 +149,24 @@ public class Sprite extends GraphicsGroup {
             }
         }
 
-        // no blocking collision — commit horizontal movement
-        moveBy(dx, 0);
+        moveBy(vx, 0);
     }
 
-    // Predictive vertical collision resolution
     private void resolveVertical(ArrayList<Element> elements, double dy) {
         if (dy == 0) return;
 
         double nextTop = getTop() + dy;
         double nextBottom = getBottom() + dy;
 
-        // assume not on ground; landing will set this true
         onGround = false;
 
         for (Element e : elements) {
             if (e == null) continue;
             if (e.getType().equals("1")) continue;
 
-            // Only consider elements that horizontally overlap the sprite right now
             boolean overlapX = !(getRight() <= e.getLeft() || getLeft() >= e.getRight());
             if (!overlapX) continue;
 
-            // Falling → landing
             if (dy > 0 && nextBottom > e.getTop() && getBottom() <= e.getTop()) {
                 setCenter(getCenter().getX(), e.getTop() - height/2);
                 vy = 0;
@@ -143,7 +174,6 @@ public class Sprite extends GraphicsGroup {
                 return;
             }
 
-            // Rising → hit ceiling
             if (dy < 0 && nextTop < e.getBottom() && getTop() >= e.getBottom()) {
                 setCenter(getCenter().getX(), e.getBottom() + height/2);
                 vy = 0;
@@ -151,17 +181,10 @@ public class Sprite extends GraphicsGroup {
             }
         }
 
-        // no vertical collision → commit
-        moveBy(0, dy);
+        moveBy(0, vy);
     }
 
-    private boolean overlaps(Element e) {
-        return !(getRight() <= e.getLeft() ||
-                 getLeft()  >= e.getRight() ||
-                 getBottom() <= e.getTop() ||
-                 getTop()    >= e.getBottom());
-    }
-
+    // getter methods
     public double getLeft()  { return getCenter().getX() - width/2; }
     public double getRight() { return getCenter().getX() + width/2; }
     public double getTop()   { return getCenter().getY() - height/2; }

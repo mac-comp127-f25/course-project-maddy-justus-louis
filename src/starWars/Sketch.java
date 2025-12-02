@@ -1,15 +1,12 @@
 package starWars;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Color;
 
-
 import edu.macalester.graphics.*;
-
 
 public class Sketch {
    // global variables
@@ -18,7 +15,6 @@ public class Sketch {
    public static double startY = 770;
    private static ArrayList<Element> elements = new ArrayList<>();
 
-
    public Sketch(){
        canvas = new CanvasWindow("game", 780, 780);
        canvas.setBackground(Color.BLACK);
@@ -26,60 +22,39 @@ public class Sketch {
        draw();
    }
 
-
    public void setup(){
        String[][] level = readCSV("res/level1.csv");
        drawLevel(canvas, level);
 
-
        p = new Sprite ("leia.png", .08, 10, 650);
        canvas.add(p);
-
 
        setupKeys();
    }
 
-
    public void draw() {
        canvas.animate(() -> {
            p.move(canvas, elements);
-
-
-
-
-           // Breakout-style collisions
-           // for (Element e : elements) {
-           //     if (p.getBottom() >= e.getTop() &&
-           //         p.getTop() <= e.getBottom() &&
-           //         p.getRight() >= e.getLeft() &&
-           //         p.getLeft() <= e.getRight()) {
-           //         p.collideWith(e);
-           //     }
-           // }
        });
    }
 
-
-   // calls whenever key pressed
+   // called whenever key pressed
    private void setupKeys() {
        canvas.onKeyDown(key -> {
            p.startMoving(key.getKey().toString());
            System.out.println(key.getKey().toString());
        });
 
-
        canvas.onKeyUp(key -> {
            p.stopMoving(key.getKey().toString());
        });
    }
-
 
    public static String[][] readCSV(String filename) {
        String[][] result = null;
        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
            String line;
            int rowCount = 0;
-
 
            int cols = 0;
            while ((line = br.readLine()) != null) {
@@ -90,14 +65,11 @@ public class Sketch {
                rowCount++;
            }
 
-
            result = new String[rowCount][cols];
-
 
        } catch (IOException e) {
            e.printStackTrace();
        }
-
 
        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
            String line;
@@ -113,25 +85,20 @@ public class Sketch {
            e.printStackTrace();
        }
 
-
        System.out.println(result.toString());
        return result;
    }
-
 
    public static void drawLevel(CanvasWindow canvas, String[][] level) {
        double currentX = 10;
        double currentY = 10;
        double side = 19;
 
-
        for (int row = 0; row < level.length; row++) {
            for (int col = 0; col < level[row].length; col++) {
                String value = level[row][col];
 
-
                Element img = getImageValue(value);
-
 
                if (img != null) {
                    img.setCenter(currentX + side/2, currentY + side/2);
@@ -144,7 +111,6 @@ public class Sketch {
            currentX = 10;
        }
    }
-
 
    public static Element getImageValue(String value){
        if (value.equals("1")){
@@ -180,16 +146,6 @@ public class Sketch {
        }
    }
 
-
-   // public static Element getElement(double x, double y) {
-   //     for (Element e : elements) {
-   //         if (x >= e.getLeft() && x <= e.getRight() &&
-   //             y >= e.getTop()  && y <= e.getBottom()) {
-   //             return e;
-   //         }
-   //     }
-   //     return null;
-   // }
    public static void main(String[] args) {
        new Sketch();
    }
