@@ -34,7 +34,8 @@ public class Sprite extends GraphicsGroup {
     public boolean onGround = false;
 
     // attributes
-    private final double SCALE = 0.04;
+    private final double SCALE = 0.06;
+    private final double GROUND_Y = 710;
     private double width, height;
     //private Ellipse debug;
     private Image character;
@@ -104,6 +105,13 @@ public class Sprite extends GraphicsGroup {
         jumpReleased = false;
 
         resolveVertical(elements, vy);
+
+        if (getY() >= GROUND_Y){
+            setY(GROUND_Y);
+            vy = 0;
+            onGround = true;
+        }
+
     }
 
     // called whenever key pressed
