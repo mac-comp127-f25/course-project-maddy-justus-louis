@@ -27,14 +27,26 @@ public class StartScreen {
         gameSublabel.setCenter(390, 440);
         window.add(gameSublabel);
 
-        Button startButton = new Button("Start Game");
-        startButton.setCenter(390, 510);
-        startButton.setScale(1.5);
-        window.add(startButton);
+        GraphicsGroup continueButtonGroup = new GraphicsGroup();
+        Image continueButton = new Image("continueButton.png");
+        continueButton.setCenter(390, 710);
+        continueButton.setScale(0.5);
+        continueButtonGroup.add(continueButton);
+        window.add(continueButtonGroup);
 
-        startButton.onClick(() -> {
-            window.closeWindow();
-            new CharacterScreen();
+        window.onClick(event -> {
+            if (continueButtonGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                window.closeWindow();
+                new CharacterScreen();
+            }
+        });
+
+        window.onMouseMove(event -> {
+            if (continueButtonGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                continueButtonGroup.setScale(1.05);
+            } else {
+                continueButtonGroup.setScale(1);
+            }
         });
     }
 }

@@ -1,7 +1,6 @@
 package starWars;
 
 import edu.macalester.graphics.*;
-import edu.macalester.graphics.ui.Button;
 
 import java.awt.Color;
 
@@ -17,35 +16,26 @@ public class CharacterScreen {
         title.setCenter(390, 220);
         window.add(title);
 
+        GraphicsGroup startButtonGroup = new GraphicsGroup();
+        Image startButton = new Image("startGameButton.png");
+        startButton.setCenter(390, 710);
+        startButton.setScale(0.5);
+        startButtonGroup.add(startButton);
+        window.add(startButtonGroup);
 
-
-        Image continueButton = new Image("startGameButton");
-        continueButton.setCenter(390, 510);
-        continueButton.setScale(1.5);
-        window.add(continueButton);
-
-        // canvas.onClick(event -> {
-        //     if (startButton.contains(event.getPosition())) {
-        //         System.out.println("Start button clicked!");
-        //         // Do something, like start game
-        //         canvas.close();  // for example, close menu
-        //         new Sketch();    // launch your game
-        //     }
-        // });
-
-        window.onClick(() -> {
-            if (continueButton.contains(mouse.getPosition())) {
-                //getX + width
-                //gety +height
-                // check if mouse click is in bounds of image and if so then
-                // create inBounds helper methods
-                System.out.println("Start button clicked!");
-                // Do something, like start game
-                window.closeWindow();
-                new Sketch();
+        window.onClick(event -> {
+            if (startButtonGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                window.closeWindow(); 
+                new Sketch();     
             }
-            window.closeWindow();
-            new Sketch();
+        });
+
+        window.onMouseMove(event -> {
+            if (startButtonGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                startButtonGroup.setScale(1.05);
+            } else {
+                startButtonGroup.setScale(1);
+            }
         });
     }
 }
