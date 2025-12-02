@@ -34,7 +34,7 @@ public class StartScreen {
 
         startButton.onClick(() -> {
             window.closeWindow();
-            new Sketch();
+            new CharacterScreen();
         });
     }
 }

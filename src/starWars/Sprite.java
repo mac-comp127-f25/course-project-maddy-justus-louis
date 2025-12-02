@@ -79,8 +79,11 @@ public class Sprite extends GraphicsGroup {
         resolveHorizontal(elements, vx);
 
         // vertical
-        if (vy < 0) vy += GRAVITY_UP;
-        else        vy += GRAVITY_DOWN;
+        if (vy < 0){
+            vy += GRAVITY_UP;
+        } else {
+            vy += GRAVITY_DOWN;
+        }        
 
         if (vy > MAX_FALL) vy = MAX_FALL;
 
@@ -102,6 +105,7 @@ public class Sprite extends GraphicsGroup {
         if (jumpReleased && vy < 0) {
             vy *= 0.5;
         }
+        
         jumpReleased = false;
 
         resolveVertical(elements, vy);
