@@ -1,8 +1,8 @@
 package starWars;
 
 import edu.macalester.graphics.*;
-import java.awt.Color;
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Sprite extends GraphicsGroup {
     // physics
@@ -34,21 +34,19 @@ public class Sprite extends GraphicsGroup {
     public boolean onGround = false;
 
     // attributes
-    private final double SCALE = 0.06;
-    private final double GROUND_Y = 710;
     private double width, height;
     //private Ellipse debug;
     private Image character;
 
     public Sprite(String imageFile, double scale, double x, double y) {
         character = new Image("leia.png");
-        character.setScale(SCALE);
-        //debug = new Ellipse(0, 0, 20, 20);
-        //debug.setFillColor(Color.RED);
+        character.setMaxHeight(35);
+        // debug = new Ellipse(0, 0, 20, 20);
+        // debug.setFillColor(Color.RED);
         add(character);
 
-        width = character.getWidth() * SCALE;
-        height = character.getHeight() * SCALE;
+        width = character.getWidth();
+        height = character.getHeight();
 
         setCenter(x, y);
 
@@ -56,6 +54,9 @@ public class Sprite extends GraphicsGroup {
         movingRight = false;
     }
 
+    /**
+     * Handles sprite movement
+     */
     public void move(CanvasWindow canvas, ArrayList<Element> elements) {
         // horizontal
         double accel = onGround ? RUN_ACCEL : AIR_ACCEL;
@@ -105,20 +106,15 @@ public class Sprite extends GraphicsGroup {
         if (jumpReleased && vy < 0) {
             vy *= 0.5;
         }
-        
+
         jumpReleased = false;
 
         resolveVertical(elements, vy);
-
-        if (getY() >= GROUND_Y){
-            setY(GROUND_Y);
-            vy = 0;
-            onGround = true;
-        }
-
     }
 
-    // called whenever key pressed
+    /**
+     * Called when key is pressed
+     */
     public void startMoving(String key) {
         if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = true;
         if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = true;
@@ -129,7 +125,9 @@ public class Sprite extends GraphicsGroup {
         }
     }
 
-    // called whenever key pressed
+    /**
+     * Called when key is released
+     */
     public void stopMoving(String key) {
         if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = false;
         if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = false;
@@ -165,7 +163,7 @@ public class Sprite extends GraphicsGroup {
             }
         }
 
-        moveBy(vx, 0);
+        moveBy(dx, 0);
     }
 
     private void resolveVertical(ArrayList<Element> elements, double dy) {
@@ -197,12 +195,23 @@ public class Sprite extends GraphicsGroup {
             }
         }
 
-        moveBy(0, vy);
+        moveBy(0, dy);
     }
 
-    // getter methods
+    /**
+     * Returns left x of sprite
+     */
     public double getLeft()  { return getCenter().getX() - width/2; }
+    /**
+     * Returns right x of sprite
+     */
     public double getRight() { return getCenter().getX() + width/2; }
+    /**
+     * Returns top y of sprite
+     */
     public double getTop()   { return getCenter().getY() - height/2; }
+    /**
+     * Returns bottom y of sprite
+     */
     public double getBottom(){ return getCenter().getY() + height/2; }
 }
