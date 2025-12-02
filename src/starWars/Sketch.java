@@ -12,7 +12,7 @@ public class Sketch {
    // global variables
    Sprite p;
    CanvasWindow canvas;
-   public static double startY = 770;
+   public static double startY = 710;
    private static ArrayList<Element> elements = new ArrayList<>();
 
    public Sketch(){
@@ -26,7 +26,7 @@ public class Sketch {
        String[][] level = readCSV("res/level1.csv");
        drawLevel(canvas, level);
 
-       p = new Sprite ("leia.png", .08, 10, 650);
+       p = new Sprite ("leia.png", .08, 30, 710);
        canvas.add(p);
 
        setupKeys();
@@ -147,6 +147,6 @@ public class Sketch {
    }
 
    public static void main(String[] args) {
-       new Sketch();
+       new StartScreen();
    }
 }

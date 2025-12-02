@@ -8,11 +8,11 @@ public class Sprite extends GraphicsGroup {
     // physics
     private final double RUN_ACCEL = 0.6;
     private final double RUN_DECEL = 0.5;
-    private final double AIR_ACCEL = 0.3;
-    private final double MAX_RUN = 4.0;
+    private final double AIR_ACCEL = 0.2;
+    private final double MAX_RUN = 5.0;
 
     private final double GRAVITY_UP = 0.35;
-    private final double GRAVITY_DOWN = 0.55;
+    private final double GRAVITY_DOWN = 0.575;
     private final double MAX_FALL = 10;
 
     private final double JUMP_VEL = -8.5;
