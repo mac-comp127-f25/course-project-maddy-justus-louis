@@ -42,7 +42,9 @@ public class Sketch {
 
    public void draw() {
        canvas.animate(() -> {
-           p.move(canvas);
+           p.move(canvas, elements);
+
+
 
 
            // Breakout-style collisions
@@ -149,31 +151,31 @@ public class Sketch {
            Element image = new Element("background.png", "1", 1, 19);
            return image;
        } else if (value.equals("2")) {
-           Element image = new Element("walls.png", "1", 1.2, 19);
+           Element image = new Element("walls.png", "2", 1.2, 19);
            return image;
        } else if (value.equals("3a")) {
-           Element image = new Element("exitA.png", "1", 1.1, 19);
+           Element image = new Element("exitA.png", "3a", 1.1, 19);
            return image;
        } else if (value.equals("3b")) {
-           Element image = new Element("exitB.png", "1", 1.1, 19);
+           Element image = new Element("exitB.png", "3b", 1.1, 19);
            return image;
        } else if (value.equals("3c")) {
-           Element image = new Element("exitC.png", "1", 1.1, 19);
+           Element image = new Element("exitC.png", "3c", 1.1, 19);
            return image;
        } else if (value.equals("3d")) {
-           Element image = new Element("exitD.png", "1", 1.1, 19);
+           Element image = new Element("exitD.png", "3d", 1.1, 19);
            return image;
        } else if (value.equals("4")) {
-           Element image = new Element("blue.png", "1", 1.7, 19);
+           Element image = new Element("blue.png", "4", 1.7, 19);
            return image;
        } else if (value.equals("5")) {
-           Element image = new Element("yellow.png", "1", 1.7, 19);
+           Element image = new Element("yellow.png", "5", 1.7, 19);
            return image;
        } else if (value.equals("6")) {
-           Element image = new Element("ground.png", "1", 1.3, 19);
+           Element image = new Element("ground.png", "6", 1.3, 19);
            return image;
        } else {
-           Element image = new Element("poison.png", "1", 1.5, 19);
+           Element image = new Element("poison.png", "7", 1.5, 19);
            return image;
        }
    }
