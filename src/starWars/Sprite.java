@@ -34,9 +34,9 @@ public class Sprite extends GraphicsGroup {
     public boolean onGround = false;
 
     // attributes
-    private final double SCALE = 0.03;
+    private final double SCALE = 0.04;
     private double width, height;
-    private Ellipse debug;
+    //private Ellipse debug;
     private Image character;
 
     public Sprite(String imageFile, double scale, double x, double y) {
