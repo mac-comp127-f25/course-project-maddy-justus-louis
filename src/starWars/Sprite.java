@@ -2,7 +2,6 @@ package starWars;
 
 import edu.macalester.graphics.*;
 import java.util.ArrayList;
-import java.awt.Color;
 
 public class Sprite extends GraphicsGroup {
     // physics
@@ -99,7 +98,6 @@ public class Sprite extends GraphicsGroup {
 
         if (vy > MAX_FALL) vy = MAX_FALL;
 
-
         if (onGround){
             coyoteTimer = COYOTE_TIME;
         } else {
@@ -174,6 +172,9 @@ public class Sprite extends GraphicsGroup {
         }
     }
 
+    /**
+     * Handles horizontal collisions
+     */
     private void resolveHorizontal(ArrayList<Element> elements, double dx) {
         if (dx == 0) return;
 
@@ -203,6 +204,9 @@ public class Sprite extends GraphicsGroup {
         moveBy(dx, 0);
     }
 
+    /**
+     * Handles vertical collisions
+     */
     private void resolveVertical(ArrayList<Element> elements, double dy) {
         if (dy == 0) return;
 

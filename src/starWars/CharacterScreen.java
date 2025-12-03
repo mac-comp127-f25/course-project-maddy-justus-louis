@@ -37,6 +37,48 @@ public class CharacterScreen {
                 startButtonGroup.setScale(1);
             }
         });
+
+        GraphicsGroup rightArrowGroup = new GraphicsGroup();
+        Image rightArrow = new Image("arrowR.png");
+        rightArrow.setCenter(585, 600);
+        rightArrow.setScale(0.5);
+        rightArrowGroup.add(rightArrow);
+        window.add(rightArrowGroup);
+
+        window.onClick(event -> {
+            if (rightArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                //  replace with switching to next character set   
+            }
+        });
+
+        window.onMouseMove(event -> {
+            if (rightArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                rightArrowGroup.setScale(1.05);
+            } else {
+                rightArrowGroup.setScale(1);
+            }
+        });
+
+        GraphicsGroup leftArrowGroup = new GraphicsGroup();
+        Image leftArrow = new Image("arrowL.png");
+        leftArrow.setCenter(195, 600);
+        leftArrow.setScale(0.5);
+        leftArrowGroup.add(leftArrow);
+        window.add(leftArrowGroup);
+
+        window.onClick(event -> {
+            if (leftArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                //  replace with switching to next character set   
+            }
+        });
+
+        window.onMouseMove(event -> {
+            if (leftArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                leftArrowGroup.setScale(1.05);
+            } else {
+                leftArrowGroup.setScale(1);
+            }
+        });
     }
 }
 
