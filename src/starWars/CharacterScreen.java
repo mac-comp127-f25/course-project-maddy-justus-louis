@@ -43,7 +43,6 @@ public class CharacterScreen {
         chewy.setMaxHeight(85);
         chewy.setCenter(390-50, 600);
         hanChewyGroup.add(chewy);
-        window.add(hanChewyGroup);
         charOptions.add(hanChewyGroup);
 
 
@@ -80,8 +79,12 @@ public class CharacterScreen {
 
         window.onClick(event -> {
             if (rightArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
-                if (index >= charOptions.size()){
+                System.out.println(index);
+                if (index == charOptions.size()-1){
+                    window.remove(charOptions.get(charOptions.size()-1));
                     index = 0;
+                    window.add(charOptions.get(index+1));
+                    index++;
                 } else {
                     window.remove(charOptions.get(index));
                     window.add(charOptions.get(index+1));
@@ -110,9 +113,13 @@ public class CharacterScreen {
         window.add(leftArrowGroup);
 
         window.onClick(event -> {
+            System.out.println(index);
             if (leftArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
                 if (index < 0){
+                    window.remove(charOptions.get(0));
                     index = charOptions.size()-1;
+                    window.add(charOptions.get(index-1));
+                    index--;
                 } else {
                     window.remove(charOptions.get(index));
                     window.add(charOptions.get(index-1));
