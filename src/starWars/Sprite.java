@@ -41,6 +41,9 @@ public class Sprite extends GraphicsGroup {
     private Image rightChar;
 
     public Sprite(String imageFile, double scale, double x, double y) {
+        leftChar = new Image("leiaL.png");
+        rightChar = new Image("leiaR.png");
+
         forwardChar = new Image("leiaForward.png");
         forwardChar.setMaxHeight(35);
         // debug = new Ellipse(0, 0, 20, 20);
@@ -125,24 +128,32 @@ public class Sprite extends GraphicsGroup {
      */
     public void startMoving(String key) {
         if (key.equals("LEFT_ARROW") || key.equals("A")){
-            removeAll();
-            movingLeft = true;
+            Image image = (Image) getElementAt(getX(), getY());
+            if (image.equals(leftChar)){
+                movingLeft = true;
+            } else {
+                removeAll();
+                movingLeft = true;
 
-            leftChar = new Image("leiaL.png");
-            leftChar.setMaxHeight(35);
-            width = leftChar.getWidth();
-            height = leftChar.getHeight();
-            add(leftChar);
+                leftChar.setMaxHeight(35);
+                width = leftChar.getWidth();
+                height = leftChar.getHeight();
+                add(leftChar);
+            }
         }
         if (key.equals("RIGHT_ARROW") || key.equals("D")){
-            removeAll();
-            movingRight = true;
+            Image image = (Image) getElementAt(getX(), getY());
+            if (image.equals(rightChar)){
+                movingRight = true;
+            } else {
+                removeAll();
+                movingRight = true;
 
-            rightChar = new Image("leiaR.png");
-            rightChar.setMaxHeight(35);
-            width = rightChar.getWidth();
-            height = rightChar.getHeight();
-            add(rightChar);
+                rightChar.setMaxHeight(35);
+                width = rightChar.getWidth();
+                height = rightChar.getHeight();
+                add(rightChar);
+            }
         } 
 
         if (key.equals("UP_ARROW") || key.equals("W")) {
