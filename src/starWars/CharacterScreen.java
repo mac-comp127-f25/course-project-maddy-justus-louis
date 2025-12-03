@@ -45,6 +45,18 @@ public class CharacterScreen {
         hanChewyGroup.add(chewy);
         charOptions.add(hanChewyGroup);
 
+        // c3po and r2d2
+        GraphicsGroup c3poR2D2Group = new GraphicsGroup();
+        Image c3po = new Image("c3poForward.png");
+        c3po.setMaxHeight(85);
+        c3po.setCenter(390+50, 595);
+        c3poR2D2Group.add(c3po);
+        Image r2d2 = new Image("r2d2Forward.png");
+        r2d2.setMaxHeight(85);
+        r2d2.setCenter(390-50, 600);
+        c3poR2D2Group.add(r2d2);
+        charOptions.add(c3poR2D2Group);
+
 
         // start button
         GraphicsGroup startButtonGroup = new GraphicsGroup();
@@ -81,19 +93,14 @@ public class CharacterScreen {
             if (rightArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
                 System.out.println(index);
                 if (index == charOptions.size()-1){
-                    window.remove(charOptions.get(charOptions.size()-1));
+                    window.remove(charOptions.get(index));
                     index = 0;
-                    window.add(charOptions.get(index+1));
-                    index++;
+                    window.add(charOptions.get(index));
                 } else {
                     window.remove(charOptions.get(index));
                     window.add(charOptions.get(index+1));
                     index++;
                 }
-
-                //  replace with switching to next character set   
-                // loop through charOptions, keep track of current index. if right arrow pressed, go to next character set
-                // if length of charOptions reached then set current index back to 1 (re loop through)
             }
         });
 
@@ -113,13 +120,11 @@ public class CharacterScreen {
         window.add(leftArrowGroup);
 
         window.onClick(event -> {
-            System.out.println(index);
             if (leftArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
-                if (index < 0){
+                if (index == 0){
                     window.remove(charOptions.get(0));
                     index = charOptions.size()-1;
-                    window.add(charOptions.get(index-1));
-                    index--;
+                    window.add(charOptions.get(index));
                 } else {
                     window.remove(charOptions.get(index));
                     window.add(charOptions.get(index-1));
