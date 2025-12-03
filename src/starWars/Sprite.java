@@ -129,7 +129,6 @@ public class Sprite extends GraphicsGroup {
             movingLeft = true;
 
             leftChar = new Image("leiaL.png");
-            remove(forwardChar);
             leftChar.setMaxHeight(35);
             width = leftChar.getWidth();
             height = leftChar.getHeight();
