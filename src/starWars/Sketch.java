@@ -9,6 +9,9 @@ import java.awt.Color;
 import edu.macalester.graphics.*;
 
 public class Sketch {
+
+    // final long[] lastTime = { System.nanoTime() }; (fps testing)
+
     // global variables
     Sprite p;
     CanvasWindow canvas;
@@ -39,6 +42,15 @@ public class Sketch {
 
     public void draw() {
         canvas.animate(() -> {
+
+            // (fps testing)
+            // long now = System.nanoTime();
+            // double dt = (now - lastTime[0]) / 1e9;
+            // lastTime[0] = now;
+
+            // double fps = 1.0 / dt;
+            // System.out.println("FPS = " + fps);
+
             p.move(canvas, elements);
         });
     }
