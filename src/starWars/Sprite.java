@@ -36,17 +36,19 @@ public class Sprite extends GraphicsGroup {
     // attributes
     private double width, height;
     //private Ellipse debug;
-    private Image character;
+    private Image forwardChar;
+    private Image leftChar;
+    private Image rightChar;
 
     public Sprite(String imageFile, double scale, double x, double y) {
-        character = new Image("leia.png");
-        character.setMaxHeight(35);
+        forwardChar = new Image("leiaForward.png");
+        forwardChar.setMaxHeight(35);
         // debug = new Ellipse(0, 0, 20, 20);
         // debug.setFillColor(Color.RED);
-        add(character);
+        add(forwardChar);
 
-        width = character.getWidth();
-        height = character.getHeight();
+        width = forwardChar.getWidth();
+        height = forwardChar.getHeight();
 
         setCenter(x, y);
 
@@ -59,7 +61,13 @@ public class Sprite extends GraphicsGroup {
      */
     public void move(CanvasWindow canvas, ArrayList<Element> elements) {
         // horizontal
-        double accel = onGround ? RUN_ACCEL : AIR_ACCEL;
+        double accel;
+
+        if (onGround) {
+            accel = RUN_ACCEL;
+        } else {
+            accel = AIR_ACCEL;
+        }
 
         if (movingLeft)  vx -= accel;
         if (movingRight) vx += accel;
@@ -116,8 +124,27 @@ public class Sprite extends GraphicsGroup {
      * Called when key is pressed
      */
     public void startMoving(String key) {
-        if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = true;
-        if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = true;
+        if (key.equals("LEFT_ARROW") || key.equals("A")){
+            removeAll();
+            movingLeft = true;
+
+            leftChar = new Image("leiaL.png");
+            remove(forwardChar);
+            leftChar.setMaxHeight(35);
+            width = leftChar.getWidth();
+            height = leftChar.getHeight();
+            add(leftChar);
+        }
+        if (key.equals("RIGHT_ARROW") || key.equals("D")){
+            removeAll();
+            movingRight = true;
+
+            rightChar = new Image("leiaR.png");
+            rightChar.setMaxHeight(35);
+            width = rightChar.getWidth();
+            height = rightChar.getHeight();
+            add(rightChar);
+        } 
 
         if (key.equals("UP_ARROW") || key.equals("W")) {
             jumpPressed = true;
