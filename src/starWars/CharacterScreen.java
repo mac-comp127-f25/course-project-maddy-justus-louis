@@ -1,11 +1,14 @@
 package starWars;
 
 import edu.macalester.graphics.*;
+import java.util.ArrayList;
 
 import java.awt.Color;
 
 public class CharacterScreen {
     private CanvasWindow window;
+    public int index = 0;
+    public ArrayList<GraphicsGroup> charOptions = new ArrayList<>();
 
     public CharacterScreen() {
         window = new CanvasWindow("Star Wars — Character Choice Screen", 780, 780);
@@ -16,6 +19,35 @@ public class CharacterScreen {
         title.setCenter(390, 220);
         window.add(title);
 
+        // character groups
+        // luke and leia
+        GraphicsGroup lukeLeiaGroup = new GraphicsGroup();
+        Image luke = new Image("lukeForward.png");
+        luke.setMaxHeight(110);
+        luke.setCenter(390+50, 595);
+        lukeLeiaGroup.add(luke);
+        Image leia = new Image("leiaForward.png");
+        leia.setMaxHeight(85);
+        leia.setCenter(390-50, 600);
+        lukeLeiaGroup.add(leia);
+        window.add(lukeLeiaGroup);
+        charOptions.add(lukeLeiaGroup);
+
+        // han and chewy
+        GraphicsGroup hanChewyGroup = new GraphicsGroup();
+        Image han = new Image("hanForward.png");
+        han.setMaxHeight(85);
+        han.setCenter(390+50, 595);
+        hanChewyGroup.add(han);
+        Image chewy = new Image("chewyForward.png");
+        chewy.setMaxHeight(85);
+        chewy.setCenter(390-50, 600);
+        hanChewyGroup.add(chewy);
+        window.add(hanChewyGroup);
+        charOptions.add(hanChewyGroup);
+
+
+        // start button
         GraphicsGroup startButtonGroup = new GraphicsGroup();
         Image startButton = new Image("startGameButton.png");
         startButton.setCenter(390, 710);
@@ -38,6 +70,7 @@ public class CharacterScreen {
             }
         });
 
+        // arrow (R/L) button
         GraphicsGroup rightArrowGroup = new GraphicsGroup();
         Image rightArrow = new Image("arrowR.png");
         rightArrow.setCenter(585, 600);
@@ -47,7 +80,17 @@ public class CharacterScreen {
 
         window.onClick(event -> {
             if (rightArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+                if (index >= charOptions.size()){
+                    index = 0;
+                } else {
+                    window.remove(charOptions.get(index));
+                    window.add(charOptions.get(index+1));
+                    index++;
+                }
+
                 //  replace with switching to next character set   
+                // loop through charOptions, keep track of current index. if right arrow pressed, go to next character set
+                // if length of charOptions reached then set current index back to 1 (re loop through)
             }
         });
 
@@ -68,7 +111,13 @@ public class CharacterScreen {
 
         window.onClick(event -> {
             if (leftArrowGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
-                //  replace with switching to next character set   
+                if (index < 0){
+                    index = charOptions.size()-1;
+                } else {
+                    window.remove(charOptions.get(index));
+                    window.add(charOptions.get(index-1));
+                    index--;
+                }
             }
         });
 
