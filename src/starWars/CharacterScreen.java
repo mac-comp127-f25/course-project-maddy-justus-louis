@@ -12,6 +12,8 @@ public class CharacterScreen {
     public ArrayList<GraphicsGroup> charOptions = new ArrayList<>();
     public GraphicsGroup selected;
     public Image selectedLabel;
+    public String p1Path;
+    public String p2Path;
 
     public CharacterScreen() {
 
@@ -90,6 +92,9 @@ public class CharacterScreen {
         selected = charOptions.get(0);
         window.add(selected);
         selected.add(selectedLabel);
+        p1Path = "leia";
+        p2Path = "luke";
+        System.out.println(p1Path + "   " + p2Path);
 
         /**
          *  start button
@@ -141,26 +146,27 @@ public class CharacterScreen {
              */
             if (startButtonGroup.testHitInLocalCoordinates(x, y)) {
                 window.closeWindow();
-                new Sketch();
+                new Sketch(p1Path, p2Path);
                 return;
             }
 
             /**
              * select button
              */
-            if (selectButtonGroup.testHitInLocalCoordinates(x, y)) {
-                selected.remove(selectedLabel);
+            if (selectButtonGroup.testHitInLocalCoordinates(x, y)) {    
+                selected.remove(selectedLabel); 
                 selected = charOptions.get(index);
-                selected.add(selectedLabel);
+                selected.add(selectedLabel); 
+
                 if (index == 0){
-                    Sketch.p1Path = "leia";
-                    Sketch.p2Path = "luke";
+                    p1Path = "leia";
+                    p2Path = "luke";
                 } else if (index == 1){
-                    Sketch.p1Path = "chewy";
-                    Sketch.p2Path = "han";
+                    p1Path = "chewy";
+                    p2Path = "han";
                 } else {
-                    Sketch.p1Path = "c3po";
-                    Sketch.p2Path = "r2d2";
+                    p1Path = "c3po";
+                    p2Path = "r2d2";
                 }
                 return;
             }
@@ -172,6 +178,7 @@ public class CharacterScreen {
                 window.remove(charOptions.get(index));
                 index = (index == charOptions.size() - 1) ? 0 : index + 1;
                 window.add(charOptions.get(index));
+                System.out.println(p1Path + "   " + p2Path);
                 return;
             }
 
@@ -182,6 +189,7 @@ public class CharacterScreen {
                 window.remove(charOptions.get(index));
                 index = (index == 0) ? charOptions.size() - 1 : index - 1;
                 window.add(charOptions.get(index));
+                System.out.println(p1Path + "   " + p2Path);
             }
 
         });

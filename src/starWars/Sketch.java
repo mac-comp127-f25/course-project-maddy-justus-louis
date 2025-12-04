@@ -9,21 +9,25 @@ import java.awt.Color;
 import edu.macalester.graphics.*;
 
 public class Sketch {
-
+    
     final long[] lastTime = { System.nanoTime() };
 
     // global variables
     public Sprite p1;
     public Sprite p2;
-    public static String p1Path;
-    public static String p2Path;
+    public String p1Path;
+    public String p2Path;
     public CanvasWindow canvas;
     public static double startY = 710;
     private static ArrayList<Element> elements = new ArrayList<>();
 
-    public Sketch(){
+    public Sketch(String p1Path, String p2Path){
         canvas = new CanvasWindow("Star Wars — Level 1", 780, 780);
         canvas.setBackground(Color.BLACK);
+
+        this.p1Path = p1Path;
+        this.p2Path = p2Path;
+        
         setup();
         draw();
     }
@@ -48,8 +52,8 @@ public class Sketch {
 
 
         // adding sprite
-        // p1 = new Sprite (p1Path, .08, 30, 700, 1);
-        // canvas.add(p1);
+        p1 = new Sprite (p1Path, .08, 30, 700, 1);
+        canvas.add(p1);
         p2 = new Sprite (p2Path, .08, 750, 700, 2);
         canvas.add(p2);
 

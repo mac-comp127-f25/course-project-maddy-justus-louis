@@ -57,9 +57,10 @@ public class Sprite extends GraphicsGroup {
      * Sets up two characters
      */
     public void setup(){
-        String path = imageName + ".png";
-        String pathL = imageName + "L" + ".png";
-        String pathR = imageName + "R" + ".png";
+        String path = imageName + "Forward.png";
+        String pathL = imageName + "L.png";
+        String pathR = imageName + "R.png";
+
         leftChar = new Image(pathL);
         rightChar = new Image(pathR);
 
@@ -137,7 +138,7 @@ public class Sprite extends GraphicsGroup {
     /**
      * Called when key is pressed
      */
-    public void startMoving(String key, int playerNum) {
+    public void startMoving(String key) {
         if (this.num == 2){
             if (key.equals("LEFT_ARROW")){
                 Image image = (Image) getElementAt(getX(), getY());
