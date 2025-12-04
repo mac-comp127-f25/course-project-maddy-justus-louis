@@ -43,10 +43,10 @@ public class Sprite extends GraphicsGroup {
     private int num;
     private String imageName;
 
-    public Sprite(String imageName, double x, double y, int num, double maxHeight) {
+    public Sprite(String imageName, double x, double y, int num, double height) {
         this.num = num;
         this.imageName = imageName;
-        this.maxHeight = maxHeight;
+        maxHeight = height;
 
         setup();
 
@@ -67,10 +67,14 @@ public class Sprite extends GraphicsGroup {
         String pathSL = imageName + "SL.png";
 
         leftChar = new Image(pathL);
+        leftChar.setMaxHeight(maxHeight);
         rightChar = new Image(pathR);
+        leftChar.setMaxHeight(maxHeight);
 
         sLChar = new Image(pathSL);
+        sLChar.setMaxHeight(maxHeight);
         sRChar = new Image(pathSR);
+        sLChar.setMaxHeight(maxHeight);
 
         forwardChar = new Image(path);
         forwardChar.setMaxHeight(maxHeight);
@@ -78,6 +82,10 @@ public class Sprite extends GraphicsGroup {
 
         width = forwardChar.getWidth();
         height = forwardChar.getHeight();
+
+        if (imageName.equals("c3po")){
+            width += 10;
+        }
     }
 
     /**
@@ -158,9 +166,9 @@ public class Sprite extends GraphicsGroup {
                     removeAll();
                     movingLeft = true;
 
-                    leftChar.setMaxHeight(35);
-                    width = leftChar.getWidth();
-                    height = leftChar.getHeight();
+                    leftChar.setMaxHeight(maxHeight);
+                    // width = leftChar.getWidth();
+                    // height = leftChar.getHeight();
                     add(leftChar);
                 }
             }
@@ -172,9 +180,9 @@ public class Sprite extends GraphicsGroup {
                     removeAll();
                     movingRight = true;
 
-                    rightChar.setMaxHeight(35);
-                    width = rightChar.getWidth();
-                    height = rightChar.getHeight();
+                    rightChar.setMaxHeight(maxHeight);
+                    // width = rightChar.getWidth();
+                    // height = rightChar.getHeight();
                     add(rightChar);
                 }
             } 
@@ -192,9 +200,9 @@ public class Sprite extends GraphicsGroup {
                     removeAll();
                     movingLeft = true;
 
-                    leftChar.setMaxHeight(35);
-                    width = leftChar.getWidth();
-                    height = leftChar.getHeight();
+                    leftChar.setMaxHeight(maxHeight);
+                    // width = leftChar.getWidth();
+                    // height = leftChar.getHeight();
                     add(leftChar);
                 }
             }
@@ -206,9 +214,9 @@ public class Sprite extends GraphicsGroup {
                     removeAll();
                     movingRight = true;
 
-                    rightChar.setMaxHeight(35);
-                    width = rightChar.getWidth();
-                    height = rightChar.getHeight();
+                    rightChar.setMaxHeight(maxHeight);
+                    // width = rightChar.getWidth();
+                    // height = rightChar.getHeight();
                     add(rightChar);
                 }
             } 
@@ -229,18 +237,18 @@ public class Sprite extends GraphicsGroup {
                     removeAll();
                     movingLeft = false;
 
-                    sLChar.setMaxHeight(35);
-                    width = sLChar.getWidth();
-                    height = sLChar.getHeight();
+                    sLChar.setMaxHeight(maxHeight);
+                    // width = sLChar.getWidth();
+                    // height = sLChar.getHeight();
                     add(sLChar);
             }
             if (key.equals("RIGHT_ARROW")){
                     removeAll();
                     movingRight = false;
 
-                    sRChar.setMaxHeight(35);
-                    width = sRChar.getWidth();
-                    height = sRChar.getHeight();
+                    sRChar.setMaxHeight(maxHeight);
+                    // width = sRChar.getWidth();
+                    // height = sRChar.getHeight();
                     add(sRChar);
             }
             if (key.equals("UP_ARROW") || key.equals("W")) {
@@ -251,18 +259,18 @@ public class Sprite extends GraphicsGroup {
                     removeAll();
                     movingLeft = false;
 
-                    sLChar.setMaxHeight(35);
-                    width = sLChar.getWidth();
-                    height = sLChar.getHeight();
+                    sLChar.setMaxHeight(maxHeight);
+                    // width = sLChar.getWidth();
+                    // height = sLChar.getHeight();
                     add(sLChar);
             }
             if (key.equals("D")){
                     removeAll();
                     movingRight = false;
 
-                    sRChar.setMaxHeight(35);
-                    width = sRChar.getWidth();
-                    height = sRChar.getHeight();
+                    sRChar.setMaxHeight(maxHeight);
+                    // width = sRChar.getWidth();
+                    // height = sRChar.getHeight();
                     add(sRChar);
             }
             if (key.equals("W")) {
@@ -352,30 +360,29 @@ public class Sprite extends GraphicsGroup {
 
         // left wall
         if (left < 0) {
-            setCenter(width / 2, getCenter().getY());
+            setCenter(width / 2 + 7, getCenter().getY());
             vx = 0;
         }
 
         // right wall
         if (right > winW) {
-            setCenter(winW - width / 2, getCenter().getY());
+            setCenter(winW - width / 2 - 7, getCenter().getY());
             vx = 0;
         }
 
         // top wall
         if (top < 0) {
-            setCenter(getCenter().getX(), height / 2);
+            setCenter(getCenter().getX(), height / 2 + 7);
             vy = 0;
         }
 
         // bottom wall
         if (bottom > winH) {
-            setCenter(getCenter().getX(), winH - height / 2);
+            setCenter(getCenter().getX(), winH - height / 2 - 7);
             vy = 0;
             onGround = true;
         }
     }
-
 
     /**
      * Returns left x of sprite

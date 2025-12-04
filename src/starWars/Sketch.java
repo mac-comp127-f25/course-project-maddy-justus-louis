@@ -39,14 +39,10 @@ public class Sketch {
     }
 
     public void setup(){
-        Image bg = new Image("background.png");
-        double scaleX = 780.0 / bg.getImageWidth();
-        double scaleY = 780.0 / bg.getImageHeight();
-        double scale = Math.max(scaleX, scaleY);
-        bg.setScale(scale);
-
-        canvas.add(bg);
+        Image bg = new Image("levelBackground2.png");
+        bg.setScale(1.05);
         bg.setCenter(canvas.getCenter());
+        canvas.add(bg);
 
         // building level
         String[][] level = readCSV("res/level1.csv");
@@ -54,10 +50,10 @@ public class Sketch {
 
 
         // adding sprite
-        p1MaxHeight = getMaxHeight();
+        p1MaxHeight = getMaxHeight(p1Path);
         p1 = new Sprite (p1Path, 30, 700, 1, p1MaxHeight);
         canvas.add(p1);
-        p2MaxHeight = getMaxHeight();
+        p2MaxHeight = getMaxHeight(p2Path);
         p2 = new Sprite (p2Path, 750, 700, 2, p2MaxHeight);
         canvas.add(p2);
 
@@ -188,20 +184,21 @@ public class Sketch {
         }
     }
 
-    public double getMaxHeight(){
+    public double getMaxHeight(String name){
         double maxHeight = 0;
-        if (p1Path.equals("leia")){
-            maxHeight = 40;
-        } else if (p1Path.equals("luke")){
-            maxHeight = 65;
-        } else if (p1Path.equals("chewy")){
-            maxHeight = 50;
-        } else if (p1Path.equals("han")){
-            maxHeight = 50;
-        } else if (p1Path.equals("c3po")){
-            maxHeight = 50;
+
+        if (name.equals("leia")){
+            return maxHeight = 38;
+        } else if (name.equals("luke")){
+            return maxHeight = 46;
+        } else if (name.equals("chewy")){
+            return maxHeight = 44;
+        } else if (name.equals("han")){
+            return maxHeight = 40;
+        } else if (name.equals("c3po")){
+            return maxHeight = 48;
         } else {
-            maxHeight = 50;
+            maxHeight = 40;
         } 
         return maxHeight;
     }

@@ -2,7 +2,6 @@ package starWars;
 
 import edu.macalester.graphics.*;
 import java.util.ArrayList;
-import java.awt.Color;
 
 public class CharacterScreen {
 
@@ -18,19 +17,31 @@ public class CharacterScreen {
     public CharacterScreen() {
 
         window = new CanvasWindow("Star Wars — Character Choice Screen", 780, 780);
-        window.setBackground(Color.BLACK);
+        Image bg = new Image("screenBackground.png");
+        bg.setScale(1.05);
+        bg.setCenter(window.getCenter().getX(), window.getCenter().getY() - 15);
+        window.add(bg);
+
+        /**
+         *  labels
+         */
+        Image falcon = new Image("falcon.png");
+        falcon.setScale(0.2);
+        falcon.setCenter(623, 600);
+        falcon.setRotation(10);
+        window.add(falcon);
 
         /**
          *  labels
          */
         Image title = new Image("characterTitle.png");
         title.setScale(0.6);
-        title.setCenter(390, 200);
+        title.setCenter(390, 100);
         window.add(title);
 
         selectedLabel = new Image("selectedLabel.png");
         selectedLabel.setScale(0.25);
-        selectedLabel.setCenter(390, 625);
+        selectedLabel.setCenter(390, 200);
 
         /**
          *  character groups (charOptions and selected)
@@ -40,13 +51,13 @@ public class CharacterScreen {
         GraphicsGroup lukeLeiaGroup = new GraphicsGroup();
         Image luke = new Image("lukeForward.png");
         luke.setMaxHeight(210);
-        double lukeY = 600 - luke.getHeight()/2;
+        double lukeY = 400 - luke.getHeight()/2;
         luke.setCenter(490, lukeY);
         lukeLeiaGroup.add(luke);
 
         Image leia = new Image("leiaForward.png");
         leia.setMaxHeight(180);
-        double leiaY = 600 - leia.getHeight()/2;
+        double leiaY = 400 - leia.getHeight()/2;
         leia.setCenter(290, leiaY);
         lukeLeiaGroup.add(leia);
 
@@ -56,14 +67,14 @@ public class CharacterScreen {
         GraphicsGroup hanChewyGroup = new GraphicsGroup();
         Image han = new Image("hanForward.png");
         han.setMaxHeight(190);
-        double hanY = 600 - han.getHeight()/2;
+        double hanY = 400 - han.getHeight()/2;
         // han.setPosition(290 + han.getWidth(), (600 + 190));
         han.setCenter(490, hanY);
         hanChewyGroup.add(han);
 
         Image chewy = new Image("chewyForward.png");
         chewy.setMaxHeight(190);
-        double chewyY = 600 - chewy.getHeight()/2;
+        double chewyY = 400 - chewy.getHeight()/2;
         // chewy.setPosition(290 + chewy.getWidth(), (600 + 190));
         chewy.setCenter(290, chewyY);
         hanChewyGroup.add(chewy);
@@ -73,15 +84,15 @@ public class CharacterScreen {
         // c3po and r2d2
         GraphicsGroup c3poR2D2Group = new GraphicsGroup();
         Image c3po = new Image("c3poForward.png");
-        c3po.setMaxHeight(210);
-        double c3poY = 600 - c3po.getHeight()/2;
+        c3po.setMaxHeight(200);
+        double c3poY = 400 - c3po.getHeight()/2;
         // c3po.setPosition(290 + c3po.getWidth(), (600 + 210));
         c3po.setCenter(490, c3poY);
         c3poR2D2Group.add(c3po);
 
         Image r2d2 = new Image("r2d2Forward.png");
-        r2d2.setMaxHeight(190);
-        double r2d2Y = 600 - r2d2.getHeight()/2;
+        r2d2.setMaxHeight(180);
+        double r2d2Y = 400 - r2d2.getHeight()/2;
         // r2d2.setPosition(290 + r2d2.getWidth(), (600 + 210));
         r2d2.setCenter(290, r2d2Y);
         c3poR2D2Group.add(r2d2);
@@ -111,8 +122,8 @@ public class CharacterScreen {
          */
         GraphicsGroup selectButtonGroup = new GraphicsGroup();
         Image selectButton = new Image("selectButton.png");
-        selectButton.setCenter(390, 350);
-        selectButton.setScale(0.4);
+        selectButton.setCenter(390, 450);
+        selectButton.setScale(0.45);
         selectButtonGroup.add(selectButton);
         window.add(selectButtonGroup);
 
@@ -121,14 +132,14 @@ public class CharacterScreen {
          */
         GraphicsGroup rightArrowGroup = new GraphicsGroup();
         Image rightArrow = new Image("arrowR.png");
-        rightArrow.setCenter(635, 500);
+        rightArrow.setCenter(635, 300);
         rightArrow.setScale(0.9);
         rightArrowGroup.add(rightArrow);
         window.add(rightArrowGroup);
 
         GraphicsGroup leftArrowGroup = new GraphicsGroup();
         Image leftArrow = new Image("arrowL.png");
-        leftArrow.setCenter(145, 500);
+        leftArrow.setCenter(145, 300);
         leftArrow.setScale(0.9);
         leftArrowGroup.add(leftArrow);
         window.add(leftArrowGroup);

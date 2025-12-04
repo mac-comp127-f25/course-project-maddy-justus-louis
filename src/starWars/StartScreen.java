@@ -2,14 +2,15 @@ package starWars;
 
 import edu.macalester.graphics.*;
 
-import java.awt.Color;
-
 public class StartScreen {
     private CanvasWindow window;
 
     public StartScreen() {
         window = new CanvasWindow("Star Wars — Start Screen", 780, 780);
-        window.setBackground(Color.BLACK);
+        Image bg = new Image("screenBackground.png");
+        bg.setScale(.9);
+        bg.setCenter(window.getCenter().getX(), window.getCenter().getY() - 15);
+        window.add(bg);
 
         Image title = new Image("starWars.png");
         title.setScale(0.2);
