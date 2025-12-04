@@ -40,12 +40,12 @@ public class CharacterScreen {
         GraphicsGroup lukeLeiaGroup = new GraphicsGroup();
         Image luke = new Image("lukeForward.png");
         luke.setMaxHeight(210);
-        double lukeY = 600 - luke.getHeight()/2 - 10;
+        double lukeY = 600 - luke.getHeight()/2;
         luke.setCenter(490, lukeY);
         lukeLeiaGroup.add(luke);
 
         Image leia = new Image("leiaForward.png");
-        leia.setMaxHeight(165);
+        leia.setMaxHeight(190);
         double leiaY = 600 - leia.getHeight()/2;
         leia.setCenter(290, leiaY);
         lukeLeiaGroup.add(leia);

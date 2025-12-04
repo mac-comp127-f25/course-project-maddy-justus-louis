@@ -191,17 +191,17 @@ public class Sketch {
     public double getMaxHeight(){
         double maxHeight = 0;
         if (p1Path.equals("leia")){
-            maxHeight = 35;
+            maxHeight = 50;
         } else if (p1Path.equals("luke")){
-            maxHeight = 35;
+            maxHeight = 50;
         } else if (p1Path.equals("chewy")){
-            maxHeight = 35;
+            maxHeight = 50;
         } else if (p1Path.equals("han")){
-            maxHeight = 35;
+            maxHeight = 50;
         } else if (p1Path.equals("c3po")){
-            maxHeight = 35;
+            maxHeight = 50;
         } else {
-            maxHeight = 35;
+            maxHeight = 50;
         } 
         return maxHeight;
     }
