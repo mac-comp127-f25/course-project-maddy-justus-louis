@@ -13,8 +13,11 @@ public class Sketch {
     final long[] lastTime = { System.nanoTime() };
 
     // global variables
-    Sprite p;
-    CanvasWindow canvas;
+    public Sprite p1;
+    public Sprite p2;
+    public static String p1Path;
+    public static String p2Path;
+    public CanvasWindow canvas;
     public static double startY = 710;
     private static ArrayList<Element> elements = new ArrayList<>();
 
@@ -26,7 +29,6 @@ public class Sketch {
     }
 
     public static void main(String[] args) {
-        //new Sketch();
         new StartScreen();
     }
 
@@ -40,12 +42,16 @@ public class Sketch {
         canvas.add(bg);
         bg.setCenter(canvas.getCenter());
 
-
+        // building level
         String[][] level = readCSV("res/level1.csv");
         drawLevel(canvas, level);
 
-        p = new Sprite ("leia.png", .08, 30, 700);
-        canvas.add(p);
+
+        // adding sprite
+        // p1 = new Sprite (p1Path, .08, 30, 700, 1);
+        // canvas.add(p1);
+        p2 = new Sprite (p2Path, .08, 750, 700, 2);
+        canvas.add(p2);
 
         setupKeys();
     }
@@ -59,21 +65,22 @@ public class Sketch {
             lastTime[0] = now;
 
             double fps = 1.0 / dt;
-            System.out.println("FPS = " + fps);
 
-            p.move(canvas, elements);
+            p1.move(canvas, elements);
+            p2.move(canvas, elements);
         });
     }
 
     // called whenever key pressed
     private void setupKeys() {
         canvas.onKeyDown(key -> {
-            p.startMoving(key.getKey().toString());
-            System.out.println(key.getKey().toString());
+            p1.startMoving(key.getKey().toString());
+            p2.startMoving(key.getKey().toString());
         });
 
         canvas.onKeyUp(key -> {
-            p.stopMoving(key.getKey().toString());
+            p1.stopMoving(key.getKey().toString());
+            p2.stopMoving(key.getKey().toString());
         });
     }
 

@@ -152,6 +152,16 @@ public class CharacterScreen {
                 selected.remove(selectedLabel);
                 selected = charOptions.get(index);
                 selected.add(selectedLabel);
+                if (index == 0){
+                    Sketch.p1Path = "leia";
+                    Sketch.p2Path = "luke";
+                } else if (index == 1){
+                    Sketch.p1Path = "chewy";
+                    Sketch.p2Path = "han";
+                } else {
+                    Sketch.p1Path = "c3po";
+                    Sketch.p2Path = "r2d2";
+                }
                 return;
             }
 

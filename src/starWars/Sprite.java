@@ -38,24 +38,37 @@ public class Sprite extends GraphicsGroup {
     private Image forwardChar;
     private Image leftChar;
     private Image rightChar;
+    private int num;
+    private String imageName;
 
-    public Sprite(String imageFile, double scale, double x, double y) {
-        leftChar = new Image("leiaL.png");
-        rightChar = new Image("leiaR.png");
+    public Sprite(String imageName, double scale, double x, double y, int num) {
+        this.num = num;
+        this.imageName = imageName;
 
-        forwardChar = new Image("leiaForward.png");
-        forwardChar.setMaxHeight(35);
-        // debug = new Ellipse(0, 0, 20, 20);
-        // debug.setFillColor(Color.RED);
-        add(forwardChar);
-
-        width = forwardChar.getWidth();
-        height = forwardChar.getHeight();
+        setup();
 
         setCenter(x, y);
 
         movingLeft = false;
         movingRight = false;
+    }
+
+    /**
+     * Sets up two characters
+     */
+    public void setup(){
+        String path = imageName + ".png";
+        String pathL = imageName + "L" + ".png";
+        String pathR = imageName + "R" + ".png";
+        leftChar = new Image(pathL);
+        rightChar = new Image(pathR);
+
+        forwardChar = new Image(path);
+        forwardChar.setMaxHeight(35);
+        add(forwardChar);
+
+        width = forwardChar.getWidth();
+        height = forwardChar.getHeight();
     }
 
     /**
@@ -124,39 +137,75 @@ public class Sprite extends GraphicsGroup {
     /**
      * Called when key is pressed
      */
-    public void startMoving(String key) {
-        if (key.equals("LEFT_ARROW") || key.equals("A")){
-            Image image = (Image) getElementAt(getX(), getY());
-            if (image.equals(leftChar)){
-                movingLeft = true;
-            } else {
-                removeAll();
-                movingLeft = true;
+    public void startMoving(String key, int playerNum) {
+        if (this.num == 2){
+            if (key.equals("LEFT_ARROW")){
+                Image image = (Image) getElementAt(getX(), getY());
+                if (image.equals(leftChar)){
+                    movingLeft = true;
+                } else {
+                    removeAll();
+                    movingLeft = true;
 
-                leftChar.setMaxHeight(35);
-                width = leftChar.getWidth();
-                height = leftChar.getHeight();
-                add(leftChar);
+                    leftChar.setMaxHeight(35);
+                    width = leftChar.getWidth();
+                    height = leftChar.getHeight();
+                    add(leftChar);
+                }
             }
-        }
-        if (key.equals("RIGHT_ARROW") || key.equals("D")){
-            Image image = (Image) getElementAt(getX(), getY());
-            if (image.equals(rightChar)){
-                movingRight = true;
-            } else {
-                removeAll();
-                movingRight = true;
+            if (key.equals("RIGHT_ARROW")){
+                Image image = (Image) getElementAt(getX(), getY());
+                if (image.equals(rightChar)){
+                    movingRight = true;
+                } else {
+                    removeAll();
+                    movingRight = true;
 
-                rightChar.setMaxHeight(35);
-                width = rightChar.getWidth();
-                height = rightChar.getHeight();
-                add(rightChar);
+                    rightChar.setMaxHeight(35);
+                    width = rightChar.getWidth();
+                    height = rightChar.getHeight();
+                    add(rightChar);
+                }
+            } 
+
+            if (key.equals("UP_ARROW")) {
+                jumpPressed = true;
+                jumpBufferTimer = JUMP_BUFFER;
             }
-        } 
+        } else {
+        if (key.equals("A")){
+                Image image = (Image) getElementAt(getX(), getY());
+                if (image.equals(leftChar)){
+                    movingLeft = true;
+                } else {
+                    removeAll();
+                    movingLeft = true;
 
-        if (key.equals("UP_ARROW") || key.equals("W")) {
-            jumpPressed = true;
-            jumpBufferTimer = JUMP_BUFFER;
+                    leftChar.setMaxHeight(35);
+                    width = leftChar.getWidth();
+                    height = leftChar.getHeight();
+                    add(leftChar);
+                }
+            }
+            if (key.equals("D")){
+                Image image = (Image) getElementAt(getX(), getY());
+                if (image.equals(rightChar)){
+                    movingRight = true;
+                } else {
+                    removeAll();
+                    movingRight = true;
+
+                    rightChar.setMaxHeight(35);
+                    width = rightChar.getWidth();
+                    height = rightChar.getHeight();
+                    add(rightChar);
+                }
+            } 
+
+            if (key.equals("W")) {
+                jumpPressed = true;
+                jumpBufferTimer = JUMP_BUFFER;
+            }
         }
     }
 
@@ -164,11 +213,20 @@ public class Sprite extends GraphicsGroup {
      * Called when key is released
      */
     public void stopMoving(String key) {
-        if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = false;
-        if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = false;
+        if (this.num == 2){   
+            if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = false;
+            if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = false;
 
-        if (key.equals("UP_ARROW") || key.equals("W")) {
-            jumpReleased = true;
+            if (key.equals("UP_ARROW") || key.equals("W")) {
+                jumpReleased = true;
+            }
+        } else {
+            if (key.equals("A")) movingLeft = false;
+            if (key.equals("D")) movingRight = false;
+
+            if (key.equals("W")) {
+                jumpReleased = true;
+            }
         }
     }
 
