@@ -227,4 +227,18 @@ public class CharacterScreen {
             }
         });
     }
+
+    // private void updatePaths() {
+    //     if (index == 0){
+    //         Sketch.p1Path = "leia";
+    //         Sketch.p2Path = "luke";
+    //     } else if (index == 1){
+    //         Sketch.p1Path = "chewy";
+    //         Sketch.p2Path = "han";
+    //     } else {
+    //         Sketch.p1Path = "c3po";
+    //         Sketch.p2Path = "r2d2";
+    //     }
+    //     System.out.println("UPDATED: " + Sketch.p1Path + "   " + Sketch.p2Path);
+    // }
 }

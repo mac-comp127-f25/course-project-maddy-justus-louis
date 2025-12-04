@@ -1,7 +1,6 @@
 package starWars;
 
 import edu.macalester.graphics.*;
-import edu.macalester.graphics.ui.Button;
 
 import java.awt.Color;
 

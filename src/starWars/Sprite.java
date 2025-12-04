@@ -8,13 +8,13 @@ public class Sprite extends GraphicsGroup {
     private final double RUN_ACCEL = 0.6;
     private final double RUN_DECEL = 0.5;
     private final double AIR_ACCEL = 0.2;
-    private final double MAX_RUN = 5.0;
+    private final double MAX_RUN = 4.0;
 
     private final double GRAVITY_UP = 0.35;
     private final double GRAVITY_DOWN = 0.575;
     private final double MAX_FALL = 10;
 
-    private final double JUMP_VEL = -8.5;
+    private final double JUMP_VEL = -9;
     private final double COYOTE_TIME = 0.12;
     private final double JUMP_BUFFER = 0.12;
 
@@ -34,16 +34,19 @@ public class Sprite extends GraphicsGroup {
 
     // attributes
     private double width, height;
-    //private Ellipse debug;
+    private double maxHeight;
     private Image forwardChar;
     private Image leftChar;
     private Image rightChar;
+    private Image sLChar;
+    private Image sRChar;
     private int num;
     private String imageName;
 
-    public Sprite(String imageName, double scale, double x, double y, int num) {
+    public Sprite(String imageName, double scale, double x, double y, int num, double maxHeight) {
         this.num = num;
         this.imageName = imageName;
+        this.maxHeight = maxHeight;
 
         setup();
 
@@ -60,12 +63,17 @@ public class Sprite extends GraphicsGroup {
         String path = imageName + "Forward.png";
         String pathL = imageName + "L.png";
         String pathR = imageName + "R.png";
+        String pathSR = imageName + "SR.png";
+        String pathSL = imageName + "SL.png";
 
         leftChar = new Image(pathL);
         rightChar = new Image(pathR);
 
+        sLChar = new Image(pathSL);
+        sRChar = new Image(pathSR);
+
         forwardChar = new Image(path);
-        forwardChar.setMaxHeight(35);
+        forwardChar.setMaxHeight(maxHeight);
         add(forwardChar);
 
         width = forwardChar.getWidth();
@@ -133,6 +141,8 @@ public class Sprite extends GraphicsGroup {
         jumpReleased = false;
 
         resolveVertical(elements, vy);
+
+        checkBoundaries(canvas);
     }
 
     /**
@@ -215,16 +225,46 @@ public class Sprite extends GraphicsGroup {
      */
     public void stopMoving(String key) {
         if (this.num == 2){   
-            if (key.equals("LEFT_ARROW") || key.equals("A")) movingLeft = false;
-            if (key.equals("RIGHT_ARROW") || key.equals("D")) movingRight = false;
+            if (key.equals("LEFT_ARROW")){
+                    removeAll();
+                    movingLeft = false;
 
+                    sLChar.setMaxHeight(35);
+                    width = sLChar.getWidth();
+                    height = sLChar.getHeight();
+                    add(sLChar);
+            }
+            if (key.equals("RIGHT_ARROW")){
+                    removeAll();
+                    movingRight = false;
+
+                    sRChar.setMaxHeight(35);
+                    width = sRChar.getWidth();
+                    height = sRChar.getHeight();
+                    add(sRChar);
+            }
             if (key.equals("UP_ARROW") || key.equals("W")) {
                 jumpReleased = true;
             }
         } else {
-            if (key.equals("A")) movingLeft = false;
-            if (key.equals("D")) movingRight = false;
+            if (key.equals("A")){
+                    removeAll();
+                    movingLeft = false;
 
+                    sLChar.setMaxHeight(35);
+                    width = sLChar.getWidth();
+                    height = sLChar.getHeight();
+                    add(sLChar);
+            }
+            if (key.equals("D")){
+                    removeAll();
+                    movingRight = false;
+
+                    sRChar.setMaxHeight(35);
+                    width = sRChar.getWidth();
+                    height = sRChar.getHeight();
+                    add(sRChar);
+            }
             if (key.equals("W")) {
                 jumpReleased = true;
             }
@@ -297,6 +337,45 @@ public class Sprite extends GraphicsGroup {
 
         moveBy(0, dy);
     }
+
+    /**
+     * Returns left x of sprite
+     */
+    private void checkBoundaries(CanvasWindow canvas){
+        double left = getLeft();
+        double right = getRight();
+        double top = getTop();
+        double bottom = getBottom();
+
+        double winW = canvas.getWidth();
+        double winH = canvas.getHeight();
+
+        // left wall
+        if (left < 0) {
+            setCenter(width / 2, getCenter().getY());
+            vx = 0;
+        }
+
+        // right wall
+        if (right > winW) {
+            setCenter(winW - width / 2, getCenter().getY());
+            vx = 0;
+        }
+
+        // top wall
+        if (top < 0) {
+            setCenter(getCenter().getX(), height / 2);
+            vy = 0;
+        }
+
+        // bottom wall
+        if (bottom > winH) {
+            setCenter(getCenter().getX(), winH - height / 2);
+            vy = 0;
+            onGround = true;
+        }
+    }
+
 
     /**
      * Returns left x of sprite

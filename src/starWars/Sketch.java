@@ -20,6 +20,8 @@ public class Sketch {
     public CanvasWindow canvas;
     public static double startY = 710;
     private static ArrayList<Element> elements = new ArrayList<>();
+    public double p1MaxHeight;
+    public double p2MaxHeight;
 
     public Sketch(String p1Path, String p2Path){
         canvas = new CanvasWindow("Star Wars — Level 1", 780, 780);
@@ -52,9 +54,11 @@ public class Sketch {
 
 
         // adding sprite
-        p1 = new Sprite (p1Path, .08, 30, 700, 1);
+        p1MaxHeight = getMaxHeight();
+        p1 = new Sprite (p1Path, .08, 30, 700, 1, p1MaxHeight);
         canvas.add(p1);
-        p2 = new Sprite (p2Path, .08, 750, 700, 2);
+        p1MaxHeight = getMaxHeight();
+        p2 = new Sprite (p2Path, .08, 750, 700, 2, p2MaxHeight);
         canvas.add(p2);
 
         setupKeys();
@@ -182,5 +186,23 @@ public class Sketch {
             Element image = new Element("poison.png", "7", 1.5, 19);
             return image;
         }
+    }
+
+    public double getMaxHeight(){
+        double maxHeight = 0;
+        if (p1Path.equals("leia")){
+            maxHeight = 35;
+        } else if (p1Path.equals("luke")){
+            maxHeight = 35;
+        } else if (p1Path.equals("chewy")){
+            maxHeight = 35;
+        } else if (p1Path.equals("han")){
+            maxHeight = 35;
+        } else if (p1Path.equals("c3po")){
+            maxHeight = 35;
+        } else {
+            maxHeight = 35;
+        } 
+        return maxHeight;
     }
 }
