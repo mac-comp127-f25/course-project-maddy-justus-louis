@@ -45,7 +45,7 @@ public class CharacterScreen {
         lukeLeiaGroup.add(luke);
 
         Image leia = new Image("leiaForward.png");
-        leia.setMaxHeight(190);
+        leia.setMaxHeight(180);
         double leiaY = 600 - leia.getHeight()/2;
         leia.setCenter(290, leiaY);
         lukeLeiaGroup.add(leia);
@@ -80,7 +80,7 @@ public class CharacterScreen {
         c3poR2D2Group.add(c3po);
 
         Image r2d2 = new Image("r2d2Forward.png");
-        r2d2.setMaxHeight(210);
+        r2d2.setMaxHeight(190);
         double r2d2Y = 600 - r2d2.getHeight()/2;
         // r2d2.setPosition(290 + r2d2.getWidth(), (600 + 210));
         r2d2.setCenter(290, r2d2Y);

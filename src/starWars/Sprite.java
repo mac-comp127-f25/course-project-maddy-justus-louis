@@ -43,7 +43,7 @@ public class Sprite extends GraphicsGroup {
     private int num;
     private String imageName;
 
-    public Sprite(String imageName, double scale, double x, double y, int num, double maxHeight) {
+    public Sprite(String imageName, double x, double y, int num, double maxHeight) {
         this.num = num;
         this.imageName = imageName;
         this.maxHeight = maxHeight;

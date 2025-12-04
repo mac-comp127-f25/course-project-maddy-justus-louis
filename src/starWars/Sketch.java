@@ -55,10 +55,10 @@ public class Sketch {
 
         // adding sprite
         p1MaxHeight = getMaxHeight();
-        p1 = new Sprite (p1Path, .08, 30, 700, 1, p1MaxHeight);
+        p1 = new Sprite (p1Path, 30, 700, 1, p1MaxHeight);
         canvas.add(p1);
-        p1MaxHeight = getMaxHeight();
-        p2 = new Sprite (p2Path, .08, 750, 700, 2, p2MaxHeight);
+        p2MaxHeight = getMaxHeight();
+        p2 = new Sprite (p2Path, 750, 700, 2, p2MaxHeight);
         canvas.add(p2);
 
         setupKeys();
@@ -191,9 +191,9 @@ public class Sketch {
     public double getMaxHeight(){
         double maxHeight = 0;
         if (p1Path.equals("leia")){
-            maxHeight = 50;
+            maxHeight = 40;
         } else if (p1Path.equals("luke")){
-            maxHeight = 50;
+            maxHeight = 65;
         } else if (p1Path.equals("chewy")){
             maxHeight = 50;
         } else if (p1Path.equals("han")){
