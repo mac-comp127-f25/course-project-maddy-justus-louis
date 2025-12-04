@@ -10,7 +10,7 @@ import edu.macalester.graphics.*;
 
 public class Sketch {
 
-    // final long[] lastTime = { System.nanoTime() }; (fps testing)
+    final long[] lastTime = { System.nanoTime() };
 
     // global variables
     Sprite p;
@@ -31,6 +31,16 @@ public class Sketch {
     }
 
     public void setup(){
+        Image bg = new Image("background.png");
+        double scaleX = 780.0 / bg.getImageWidth();
+        double scaleY = 780.0 / bg.getImageHeight();
+        double scale = Math.max(scaleX, scaleY);
+        bg.setScale(scale);
+
+        canvas.add(bg);
+        bg.setCenter(canvas.getCenter());
+
+
         String[][] level = readCSV("res/level1.csv");
         drawLevel(canvas, level);
 
@@ -44,12 +54,12 @@ public class Sketch {
         canvas.animate(() -> {
 
             // (fps testing)
-            // long now = System.nanoTime();
-            // double dt = (now - lastTime[0]) / 1e9;
-            // lastTime[0] = now;
+            long now = System.nanoTime();
+            double dt = (now - lastTime[0]) / 1e9;
+            lastTime[0] = now;
 
-            // double fps = 1.0 / dt;
-            // System.out.println("FPS = " + fps);
+            double fps = 1.0 / dt;
+            System.out.println("FPS = " + fps);
 
             p.move(canvas, elements);
         });
@@ -131,8 +141,8 @@ public class Sketch {
 
     public static Element getImageValue(String value){
         if (value.equals("1")){
-            Element image = new Element("background.png", "1", 1, 19);
-            return image;
+            // Element image = new Element("background.png", "1", 1, 19);
+            return null;
         } else if (value.equals("2")) {
             Element image = new Element("walls.png", "2", 1.2, 19);
             return image;
