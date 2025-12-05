@@ -261,36 +261,44 @@ public class Sprite extends GraphicsGroup {
     public void stopMoving(String key) {
         if (this.num == 2){   
             if (key.equals("LEFT_ARROW")){
+                if (move == true){
                     removeAll();
                     movingLeft = false;
 
                     sLChar.setMaxHeight(maxHeight);
                     add(sLChar);
+                }
             }
             if (key.equals("RIGHT_ARROW")){
+                if (move == true){
                     removeAll();
                     movingRight = false;
 
                     sRChar.setMaxHeight(maxHeight);
                     add(sRChar);
+                }
             }
             if (key.equals("UP_ARROW") || key.equals("W")) {
                 jumpReleased = true;
             }
         } else {
             if (key.equals("A")){
+                if (move == true){
                     removeAll();
                     movingLeft = false;
 
                     sLChar.setMaxHeight(maxHeight);
                     add(sLChar);
+                }
             }
             if (key.equals("D")){
+                if (move == true){
                     removeAll();
                     movingRight = false;
 
                     sRChar.setMaxHeight(maxHeight);
                     add(sRChar);
+                }
             }
             if (key.equals("W")) {
                 jumpReleased = true;
@@ -318,6 +326,12 @@ public class Sprite extends GraphicsGroup {
             if (dx > 0 && nextRight > e.getLeft() && getRight() <= e.getLeft()) {
                 checkElements(e, nextRight);
 
+                if (!canWalkOn(e)) {
+                        resetSprite();
+                        vy = 0;
+                        onGround = true;
+                }
+
                 setCenter(e.getLeft() - width/2, getCenter().getY());
                 vx = 0;
                 return;
@@ -325,6 +339,12 @@ public class Sprite extends GraphicsGroup {
 
             if (dx < 0 && nextLeft < e.getRight() && getLeft() >= e.getRight()) {
                 checkElements(e, nextLeft);
+
+                if (!canWalkOn(e)) {
+                        resetSprite();
+                        vy = 0;
+                        onGround = true;
+                }
 
                 setCenter(e.getRight() + width/2, getCenter().getY());
                 vx = 0;
@@ -358,15 +378,9 @@ public class Sprite extends GraphicsGroup {
                 checkElements(e, nextBottom);
 
                 if (!canWalkOn(e)) {
-                    if (dy > 0) {
-                        setCenter(getCenter().getX(), e.getTop() - height/2);
+                        resetSprite();
                         vy = 0;
                         onGround = true;
-                    } else {
-                        setCenter(getCenter().getX(), e.getBottom() + height/2);
-                        vy = 0;
-                    }
-                    return;
                 }
 
                 setCenter(getCenter().getX(), e.getTop() - height/2);
@@ -379,15 +393,9 @@ public class Sprite extends GraphicsGroup {
                 checkElements(e, nextTop);
 
                 if (!canWalkOn(e)) {
-                    if (dy > 0) {
-                        setCenter(getCenter().getX(), e.getTop() - height/2);
+                        resetSprite();
                         vy = 0;
                         onGround = true;
-                    } else {
-                        setCenter(getCenter().getX(), e.getBottom() + height/2);
-                        vy = 0;
-                    }
-                    return;
                 }
 
                 setCenter(getCenter().getX(), e.getBottom() + height/2);
@@ -493,8 +501,8 @@ public class Sprite extends GraphicsGroup {
     }
 
     public void resetSprite(){
-        setCenter(startX, startY);
         removeAll();
+        setCenter(startX, startY);
         add(forwardChar);
     }
 
