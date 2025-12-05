@@ -23,6 +23,7 @@ public class Sketch {
     public double p1MaxHeight;
     public double p2MaxHeight;
     public int levelNum;
+    public boolean levelReady = false;
 
     public Sketch(String p1Path, String p2Path){
         canvas = new CanvasWindow("Star Wars — Level 1", 780, 780);
@@ -49,6 +50,7 @@ public class Sketch {
         String[][] level1 = readCSV("res/level1.csv");
         drawLevel(canvas, level1);
         levelNum = 1;
+        levelReady = true;
 
         // adding sprite
         p1MaxHeight = getMaxHeight(p1Path);
@@ -71,14 +73,30 @@ public class Sketch {
 
             double fps = 1.0 / dt;
 
-            if (p1.setNextLevel&&p2.setNextLevel){
+            if (levelReady && p1.setNextLevel && p2.setNextLevel && (levelNum < 6)){
+                levelReady = false;
                 canvas.removeAll();
+
+                Image bg = new Image("levelBackground2.png");
+                bg.setScale(1.05);
+                bg.setCenter(canvas.getCenter());
+                canvas.add(bg);
+
+                levelNum ++;
                 String path = "res/level" + levelNum + ".csv";
                 String[][] level = readCSV(path);
                 drawLevel(canvas, level);
-                levelNum ++;
+
                 p1.resetSprite();
                 p2.resetSprite();
+                canvas.add(p1);
+                canvas.add(p1);
+                p1.move = true;
+                p2.move = true;
+                p1.setNextLevel = false;
+                p2.setNextLevel = false;
+
+                levelReady = true;
             }
 
             p1.move(canvas, elements);
@@ -139,6 +157,7 @@ public class Sketch {
     }
 
     public static void drawLevel(CanvasWindow canvas, String[][] level) {
+        elements.clear();
         double currentX = 10;
         double currentY = 10;
         double side = 19;
