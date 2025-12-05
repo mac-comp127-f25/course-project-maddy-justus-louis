@@ -87,16 +87,7 @@ public class Sketch {
                 String[][] level = readCSV(path);
                 drawLevel(canvas, level);
 
-                p1.resetSprite();
-                p2.resetSprite();
-                canvas.add(p1);
-                canvas.add(p1);
-                p1.move = true;
-                p2.move = true;
-                p1.setNextLevel = false;
-                p2.setNextLevel = false;
-
-                levelReady = true;
+                readyNextLevel();
             }
 
             p1.move(canvas, elements);
@@ -178,6 +169,19 @@ public class Sketch {
             currentY += side;
             currentX = 10;
         }
+    }
+
+    public void readyNextLevel(){
+        p1.resetSprite();
+        p2.resetSprite();
+        canvas.add(p2);
+        canvas.add(p1);
+        p1.move = true;
+        p2.move = true;
+        p1.setNextLevel = false;
+        p2.setNextLevel = false;
+
+        levelReady = true;
     }
 
     public static Element getImageValue(String value){

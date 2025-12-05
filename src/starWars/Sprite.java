@@ -86,10 +86,10 @@ public class Sprite extends GraphicsGroup {
 
         if (num == 1){
             exitChar = new Image("p2Exit.png");
-            exitChar.setMaxHeight(20);
+            exitChar.setMaxHeight(30);
         } else {
             exitChar = new Image("p1Exit.png");
-            exitChar.setMaxHeight(20);
+            exitChar.setMaxHeight(30);
         }
 
         forwardChar = new Image(path);
@@ -177,27 +177,32 @@ public class Sprite extends GraphicsGroup {
     public void startMoving(String key, ArrayList<Element> elements) {
         if (this.num == 2){
             if (key.equals("LEFT_ARROW")){
-                Image image = (Image) getElementAt(getX(), getY());
-                if (image.equals(leftChar)){
-                    movingLeft = true;
-                } else {
-                    removeAll();
-                    movingLeft = true;
+                if (move == true){
+                    Image image = (Image) getElementAt(getX(), getY());
+                    if (image.equals(leftChar)){
+                        movingLeft = true;
+                    } else {
+                        removeAll();
+                        movingLeft = true;
 
-                    leftChar.setMaxHeight(maxHeight);
-                    add(leftChar);
+                        leftChar.setMaxHeight(maxHeight);
+                        add(leftChar);
+                    }
                 }
+               
             }
             if (key.equals("RIGHT_ARROW")){
-                Image image = (Image) getElementAt(getX(), getY());
-                if (image.equals(rightChar)){
-                    movingRight = true;
-                } else {
-                    removeAll();
-                    movingRight = true;
+                if (move == true){
+                    Image image = (Image) getElementAt(getX(), getY());
+                    if (image.equals(rightChar)){
+                        movingRight = true;
+                    } else {
+                        removeAll();
+                        movingRight = true;
 
-                    rightChar.setMaxHeight(maxHeight);
-                    add(rightChar);
+                        rightChar.setMaxHeight(maxHeight);
+                        add(rightChar);
+                    }
                 }
             } 
 
@@ -211,27 +216,31 @@ public class Sprite extends GraphicsGroup {
             }
         } else {
         if (key.equals("A")){
-                Image image = (Image) getElementAt(getX(), getY());
-                if (image.equals(leftChar)){
-                    movingLeft = true;
-                } else {
-                    removeAll();
-                    movingLeft = true;
+                if (move == true){
+                    Image image = (Image) getElementAt(getX(), getY());
+                    if (image.equals(leftChar)){
+                        movingLeft = true;
+                    } else {
+                        removeAll();
+                        movingLeft = true;
 
-                    leftChar.setMaxHeight(maxHeight);
-                    add(leftChar);
+                        leftChar.setMaxHeight(maxHeight);
+                        add(leftChar);
+                    }
                 }
             }
             if (key.equals("D")){
-                Image image = (Image) getElementAt(getX(), getY());
-                if (image.equals(rightChar)){
-                    movingRight = true;
-                } else {
-                    removeAll();
-                    movingRight = true;
+                if (move == true){
+                    Image image = (Image) getElementAt(getX(), getY());
+                    if (image.equals(rightChar)){
+                        movingRight = true;
+                    } else {
+                        removeAll();
+                        movingRight = true;
 
-                    rightChar.setMaxHeight(maxHeight);
-                    add(rightChar);
+                        rightChar.setMaxHeight(maxHeight);
+                        add(rightChar);
+                    }
                 }
             } 
 
