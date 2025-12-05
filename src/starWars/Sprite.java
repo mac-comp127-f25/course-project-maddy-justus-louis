@@ -44,6 +44,7 @@ public class Sprite extends GraphicsGroup {
     private String imageName;
     private double startX;
     private double startY;
+    public boolean setNextLevel;
 
     public Sprite(String imageName, double x, double y, int num, double height) {
         this.num = num;
@@ -58,6 +59,7 @@ public class Sprite extends GraphicsGroup {
 
         movingLeft = false;
         movingRight = false;
+        setNextLevel = false;
     }
 
     /**
@@ -160,7 +162,7 @@ public class Sprite extends GraphicsGroup {
     /**
      * Called when key is pressed
      */
-    public void startMoving(String key) {
+    public void startMoving(String key, ArrayList<Element> elements) {
         if (this.num == 2){
             if (key.equals("LEFT_ARROW")){
                 Image image = (Image) getElementAt(getX(), getY());
@@ -190,6 +192,20 @@ public class Sprite extends GraphicsGroup {
             if (key.equals("UP_ARROW")) {
                 jumpPressed = true;
                 jumpBufferTimer = JUMP_BUFFER;
+
+                for (Element e : elements) { 
+                    if (e == null) continue;
+
+                    String type = e.getType();
+
+                    boolean overlapX = !(getRight() <= e.getLeft() || getLeft() >= e.getRight());
+                    boolean overlapY = !(getBottom() <= e.getTop() || getTop() >= e.getBottom());
+
+                    if (overlapX && overlapY && type.equals("3a") || type.equals("3b") || type.equals("3c") || type.equals("3d")) {
+                        setNextLevel = true;
+                        break;
+                    }
+                }
             }
         } else {
         if (key.equals("A")){
@@ -220,6 +236,20 @@ public class Sprite extends GraphicsGroup {
             if (key.equals("W")) {
                 jumpPressed = true;
                 jumpBufferTimer = JUMP_BUFFER;
+
+                for (Element e : elements) { 
+                    if (e == null) continue;
+
+                    String type = e.getType();
+
+                    boolean overlapX = !(getRight() <= e.getLeft() || getLeft() >= e.getRight());
+                    boolean overlapY = !(getBottom() <= e.getTop() || getTop() >= e.getBottom());
+
+                    if (overlapX && overlapY && type.equals("3a") || type.equals("3b") || type.equals("3c") || type.equals("3d")) {
+                        setNextLevel = true;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -284,12 +314,28 @@ public class Sprite extends GraphicsGroup {
             if (!overlapY) continue;
 
             if (dx > 0 && nextRight > e.getLeft() && getRight() <= e.getLeft()) {
+                if (e.getType().equals("7")) {
+                    setCenter(nextRight, getY());
+                    setCenter(startX, startY);
+                    vx = 0;
+                    vy = 0;
+                    return;
+                }
+
                 setCenter(e.getLeft() - width/2, getCenter().getY());
                 vx = 0;
                 return;
             }
 
             if (dx < 0 && nextLeft < e.getRight() && getLeft() >= e.getRight()) {
+                if (e.getType().equals("7")) {
+                    setCenter(nextLeft, getY());
+                    setCenter(startX, startY);
+                    vx = 0;
+                    vy = 0;
+                    return;
+                }
+
                 setCenter(e.getRight() + width/2, getCenter().getY());
                 vx = 0;
                 return;
@@ -318,11 +364,20 @@ public class Sprite extends GraphicsGroup {
             if (!overlapX) continue;
 
             if (dy > 0 && nextBottom > e.getTop() && getBottom() <= e.getTop()) {
+                if (e.getType().equals("7")) {
+                    setCenter(nextBottom, getY());
+                    setCenter(startX, startY);
+                    vx = 0;
+                    vy = 0;
+                    return;
+                }
+
                 if (!canWalkOn(e)) {
-                    setCenter(nextTop, getY());
+                    setCenter(nextBottom, getY());
                     setCenter(startX, startY);
                     return;
                 }
+
                 setCenter(getCenter().getX(), e.getTop() - height/2);
                 vy = 0;
                 onGround = true;
@@ -330,6 +385,20 @@ public class Sprite extends GraphicsGroup {
             }
 
             if (dy < 0 && nextTop < e.getBottom() && getTop() >= e.getBottom()) {
+                if (e.getType().equals("7")) {
+                    setCenter(nextTop, getY());
+                    setCenter(startX, startY);
+                    vx = 0;
+                    vy = 0;
+                    return;
+                }
+                
+                if (!canWalkOn(e)) {
+                    setCenter(nextTop, getY());
+                    setCenter(startX, startY);
+                    return;
+                }
+
                 setCenter(getCenter().getX(), e.getBottom() + height/2);
                 vy = 0;
                 return;
@@ -382,6 +451,10 @@ public class Sprite extends GraphicsGroup {
 
         String type = e.getType();
 
+        if (type.equals("3a") || type.equals("3b") || type.equals("3c") || type.equals("3d")) {
+            return false; 
+        }
+
         if (type.equals("5")) {
             return this.num == 1;
         }
@@ -391,6 +464,10 @@ public class Sprite extends GraphicsGroup {
         }
 
         return true;
+    }
+
+    public void resetSprite(){
+        setCenter(startX, startY);
     }
 
     /**

@@ -22,6 +22,7 @@ public class Sketch {
     private static ArrayList<Element> elements = new ArrayList<>();
     public double p1MaxHeight;
     public double p2MaxHeight;
+    public int levelNum;
 
     public Sketch(String p1Path, String p2Path){
         canvas = new CanvasWindow("Star Wars — Level 1", 780, 780);
@@ -45,9 +46,9 @@ public class Sketch {
         canvas.add(bg);
 
         // building level
-        String[][] level = readCSV("res/level1.csv");
-        drawLevel(canvas, level);
-
+        String[][] level1 = readCSV("res/level1.csv");
+        drawLevel(canvas, level1);
+        levelNum = 1;
 
         // adding sprite
         p1MaxHeight = getMaxHeight(p1Path);
@@ -70,6 +71,16 @@ public class Sketch {
 
             double fps = 1.0 / dt;
 
+            if (p1.setNextLevel&&p2.setNextLevel){
+                canvas.removeAll();
+                String path = "res/level" + levelNum + ".csv";
+                String[][] level = readCSV(path);
+                drawLevel(canvas, level);
+                levelNum ++;
+                p1.resetSprite();
+                p2.resetSprite();
+            }
+
             p1.move(canvas, elements);
             p2.move(canvas, elements);
         });
@@ -78,8 +89,8 @@ public class Sketch {
     // called whenever key pressed
     private void setupKeys() {
         canvas.onKeyDown(key -> {
-            p1.startMoving(key.getKey().toString());
-            p2.startMoving(key.getKey().toString());
+            p1.startMoving(key.getKey().toString(), elements);
+            p2.startMoving(key.getKey().toString(), elements);
         });
 
         canvas.onKeyUp(key -> {
