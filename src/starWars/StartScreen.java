@@ -34,18 +34,42 @@ public class StartScreen {
         continueButtonGroup.add(continueButton);
         window.add(continueButtonGroup);
 
+        GraphicsGroup howToPlayButtonGroup = new GraphicsGroup();
+        Image howToPlayButton = new Image("howToPlayButton.png");
+        howToPlayButton.setCenter(390, 475);
+        howToPlayButton.setScale(0.3);
+        howToPlayButtonGroup.add(howToPlayButton);
+        window.add(howToPlayButtonGroup);
+
+
         window.onClick(event -> {
-            if (continueButtonGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+            double x = event.getPosition().getX();
+            double y = event.getPosition().getY();
+
+            if (continueButtonGroup.testHitInLocalCoordinates(x, y)) {
                 window.closeWindow();
                 new CharacterScreen();
+            }
+            if (howToPlayButtonGroup.testHitInLocalCoordinates(x, y)) {
+                window.closeWindow();
+                new HelpScreen();
             }
         });
 
         window.onMouseMove(event -> {
-            if (continueButtonGroup.testHitInLocalCoordinates(event.getPosition().getX(), event.getPosition().getY())) {
+            double x = event.getPosition().getX();
+            double y = event.getPosition().getY();
+
+            if (continueButtonGroup.testHitInLocalCoordinates(x, y)) {
                 continueButtonGroup.setScale(1.05);
             } else {
                 continueButtonGroup.setScale(1);
+            }
+
+            if (howToPlayButtonGroup.testHitInLocalCoordinates(x, y)) {
+                howToPlayButtonGroup.setScale(1.05);
+            } else {
+                howToPlayButtonGroup.setScale(1);
             }
         });
     }
