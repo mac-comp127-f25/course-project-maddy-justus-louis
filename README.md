@@ -1,3 +1,4 @@
-# Project Title Goes Here
+# Project Report: Star Wars - Escaping the Galaxy
 
-Info about your project goes here
+Team members: Maddy Scott, Justus DeLoach, Louis Tao
+
