@@ -9,7 +9,7 @@ public class CharacterScreen {
     public int index = 0;
 
     public ArrayList<GraphicsGroup> charOptions = new ArrayList<>();
-    public GraphicsGroup selected;
+    public static GraphicsGroup selected;
     public Image selectedLabel;
     public String p1Path;
     public String p2Path;

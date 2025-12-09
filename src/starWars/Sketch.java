@@ -15,8 +15,8 @@ public class Sketch {
     // global variables
     public Sprite p1;
     public Sprite p2;
-    public String p1Path;
-    public String p2Path;
+    public static String p1Path;
+    public static String p2Path;
     public CanvasWindow canvas;
     public static double startY = 710;
     private static ArrayList<Element> elements = new ArrayList<>();
@@ -37,8 +37,8 @@ public class Sketch {
     }
 
     public static void main(String[] args) {
-        new HelpScreen();
         //new StartScreen();
+        new ClosingScreen();
     }
 
     public void setup(){
@@ -74,7 +74,7 @@ public class Sketch {
 
             double fps = 1.0 / dt;
 
-            if (levelReady && p1.setNextLevel && p2.setNextLevel && (levelNum < 6)){
+            if (levelReady && p1.setNextLevel && p2.setNextLevel && (levelNum > 4)){
                 levelReady = false;
                 canvas.removeAll();
 
@@ -89,6 +89,8 @@ public class Sketch {
                 drawLevel(canvas, level);
 
                 readyNextLevel();
+            } else if (levelNum == 4){
+                new ClosingScreen();
             }
 
             p1.move(canvas, elements);
