@@ -73,7 +73,7 @@ public class Sketch {
 
             double fps = 1.0 / dt;
 
-            if (levelReady && p1.setNextLevel && p2.setNextLevel && (levelNum > 4)){
+            if (levelReady && p1.setNextLevel && p2.setNextLevel && (levelNum < 4)){
                 levelReady = false;
                 canvas.removeAll();
 
@@ -88,7 +88,7 @@ public class Sketch {
                 drawLevel(canvas, level);
 
                 readyNextLevel();
-            } else if (levelNum == 4){
+            } else if (p1.setNextLevel && p2.setNextLevel && levelNum == 4){
                 new ClosingScreen();
             }
 
